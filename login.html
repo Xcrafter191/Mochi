@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yochi - Login</title>
+    <link rel="stylesheet" href="yochi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .auth-form input {
+            width: 100%;
+            padding: 12px;
+            padding-right: 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .validation-message {
+            color: #ff4444;
+            font-size: 0.8em;
+            margin-top: 5px;
+            min-height: 16px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 70%;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Yochi</div>
+            <div class="menu">
+                <div>Home</div>
+                <div>About</div>
+                <div>Contact</div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="slogan-container">
+                <div class="slogan">
+                    <span class="word">Welcome</span>
+                    <span class="word"> Back</span>
+                    <span class="word"> to</span>
+                    <span class="word"> Yochi!</span>
+                </div>
+                <form id="loginForm" class="auth-form">
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder="Email" required>
+                        <div id="emailError" class="validation-message"></div>
+                    </div>
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="button" class="password-toggle" id="passwordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <div id="passwordError" class="validation-message"></div>
+                    </div>
+                    <button type="submit" class="button-primary">Log In</button>
+                </form>
+                <p>
+                    Don't have an account? <a href="signup.html">Sign up</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+
+            // Password visibility toggle
+            passwordToggle.addEventListener('click', () => {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                const icon = passwordToggle.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+
+            // Email validation function
+            function isValidEmail(email) {
+                const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                return emailRegex.test(email);
+            }
+
+            // Real-time email validation
+            emailInput.addEventListener('input', () => {
+                if (!isValidEmail(emailInput.value) && emailInput.value !== '') {
+                    emailError.textContent = 'Please enter a valid email address';
+                } else {
+                    emailError.textContent = '';
+                }
+            });
+
+            // Form validation
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+
+                // Password validation
+                if (passwordInput.value.length < 8) {
+                    passwordError.textContent = 'Password must be at least 8 characters long';
+                    isValid = false;
+                } else {
+                    passwordError.textContent = '';
+                }
+
+                // Email validation
+                if (!isValidEmail(emailInput.value)) {
+                    emailError.textContent = 'Please enter a valid email address';
+                    isValid = false;
+                } else {
+                    emailError.textContent = '';
+                }
+
+                if (isValid) {
+                    // Submit form
+                    console.log('Form submitted successfully');
+                    // Add your form submission logic here
+                }
+            });
+        });
+    </script>
+</body>
+</html>
