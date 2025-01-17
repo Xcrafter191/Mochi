@@ -17,7 +17,6 @@
         }
 
         .container {
-            border: 1px solid black;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -29,7 +28,6 @@
             height: 6%;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid black;
             background-color: #FFDDC1;
             position: static;
             z-index: 1;
@@ -37,7 +35,6 @@
 
         .header {
             justify-content: space-between;
-            padding: 0 20px;
         }
 
         .menu {
@@ -46,10 +43,6 @@
             font-size: 16px;
             margin-right: auto;
             padding-left: 10%;
-        }
-
-        .footer {
-            border-top: 1px solid black;
         }
 
         .main {
@@ -254,9 +247,12 @@
         }
 
         .dot-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Ensure it stays in the background */
 }
 
 .dot {
@@ -298,12 +294,116 @@
     transform: translateX(-50%);
 }
 
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;700&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'DynaPuff', cursive;
+    background-color: #FFE5E5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFE5E5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: transform 1s ease-in-out;
+}
+
+.loading-container.slide-out {
+    transform: translateY(-100%);
+}
+
+.progress-bar {
+    width: 300px;
+    height: 30px;
+    background-color: #FFD6E0;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        #FFAFC5,
+        #FFAFC5 10px,
+        #FFB9CC 10px,
+        #FFB9CC 20px
+    );
+    border-radius: 15px;
+    transition: width 0.5s ease;
+}
+
+.yochi-text {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #FF85A1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.loading-text {
+    margin-top: 10px;
+    color: #FF85A1;
+    font-size: 1.2em;
+}
+
+.sprinkle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #FFF;
+    animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.cute-button {
+    background-color: #FFAFC5;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'DynaPuff', cursive;
+    font-size: 1em;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cute-button:hover {
+    background-color: #FF85A1;
+}
+
     </style>
 </head>
 <body>
-    <div class="dot-container">
-        <!-- Dots will be added dynamically by JS -->
-      </div>
+    <div class="loading-container" id="loadingContainer">
+        <div class="yochi-text">YOCHI!</div>
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+        <div class="loading-text">Loading yummy goodness...</div>
+    </div>
+
     <div class="container">
         <div class="header">
             <div class="logo">Logo</div>
@@ -342,6 +442,46 @@
     </div>
 
     <script>
+        function setProgress(percent) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percent + '%';
+        }
+
+        function addSprinkles() {
+            const progressBar = document.querySelector('.progress-bar');
+            for (let i = 0; i < 5; i++) {
+                const sprinkle = document.createElement('div');
+                sprinkle.classList.add('sprinkle');
+                sprinkle.style.left = Math.random() * 100 + '%';
+                sprinkle.style.top = Math.random() * 30 + 'px';
+                sprinkle.style.backgroundColor = ['#FFD6E0', '#FFAFC5', '#FF85A1'][Math.floor(Math.random() * 3)];
+                sprinkle.style.animationDelay = Math.random() * 2 + 's';
+                progressBar.appendChild(sprinkle);
+            }
+        }
+
+        function showMainContent() {
+            const loadingContainer = document.getElementById('loadingContainer');
+            loadingContainer.classList.add('slide-out');
+            setTimeout(() => {
+                loadingContainer.style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            }, 1000); // Match the duration of the slide-out animation
+        }
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                setTimeout(showMainContent, 500);
+            }
+            setProgress(progress);
+        }, 200);
+
+        addSprinkles();
+        
        document.querySelectorAll('.word').forEach((word) => {
   word.addEventListener('mouseenter', () => {
     // Generate a random rotation direction (clockwise or counterclockwise)
