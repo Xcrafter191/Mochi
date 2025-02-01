@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yochi Loading Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'DynaPuff', cursive;
+            background-color: #FFE5E5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            width: 300px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background-color: #FFD6E0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                #FFAFC5,
+                #FFAFC5 10px,
+                #FFB9CC 10px,
+                #FFB9CC 20px
+            );
+            border-radius: 15px;
+            transition: width 0.5s ease;
+        }
+
+        .yochi-text {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #FF85A1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .loading-text {
+            margin-top: 10px;
+            color: #FF85A1;
+            font-size: 1.2em;
+        }
+
+        .sprinkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #FFF;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .main-content {
+            display: none;
+            text-align: center;
+            color: #FF85A1;
+        }
+
+        .main-content h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .main-content p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .cute-button {
+            background-color: #FFAFC5;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'DynaPuff', cursive;
+            font-size: 1em;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cute-button:hover {
+            background-color: #FF85A1;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container" id="loadingContainer">
+        <div class="yochi-text">YOCHI!</div>
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+        <div class="loading-text">Loading yummy goodness...</div>
+    </div>
+
+    <main class="main-content" id="mainContent">
+        <h1>Welcome to Yochi!</h1>
+        <p>Discover our delicious treats and sweet surprises!</p>
+        <button class="cute-button">Explore Flavors</button>
+    </main>
+
+    <script>
+        function setProgress(percent) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percent + '%';
+        }
+
+        function addSprinkles() {
+            const progressBar = document.querySelector('.progress-bar');
+            for (let i = 0; i < 5; i++) {
+                const sprinkle = document.createElement('div');
+                sprinkle.classList.add('sprinkle');
+                sprinkle.style.left = Math.random() * 100 + '%';
+                sprinkle.style.top = Math.random() * 30 + 'px';
+                sprinkle.style.backgroundColor = ['#FFD6E0', '#FFAFC5', '#FF85A1'][Math.floor(Math.random() * 3)];
+                sprinkle.style.animationDelay = Math.random() * 2 + 's';
+                progressBar.appendChild(sprinkle);
+            }
+        }
+
+        function showMainContent() {
+            document.getElementById('loadingContainer').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                setTimeout(showMainContent, 500);
+            }
+            setProgress(progress);
+        }, 200);
+
+        addSprinkles();
+    </script>
+</body>
+</html>
