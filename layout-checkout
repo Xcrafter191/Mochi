@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja - Mochi</title>
+    <style>
+      /* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
+    background-size: 20px 20px;
+    z-index: -1;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cart, .checkout {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cart h2, .checkout h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.item-details .price {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.quantity-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    margin: 0 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.remove-btn {
+    background: rgba(255, 99, 71, 0.8);
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.remove-btn:hover {
+    background: rgba(255, 99, 71, 1);
+}
+
+.summary {
+    text-align: right;
+}
+
+.summary p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.total-price {
+    font-weight: 700;
+    color: #ffdd57;
+}
+
+.checkout-btn {
+    background: linear-gradient(135deg, #ff6f61, #ff4a3d);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.checkout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+</style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <header>
+            <h1>Keranjang Belanja Mochi</h1>
+            <p>Nikmati kelezatan mochi dengan pembayaran mudah!</p>
+        </header>
+
+        <main>
+            <section class="cart">
+                <h2>Produk di Keranjang</h2>
+                <div class="cart-item">
+                    <img src="mochi1.jpg" alt="Mochi Coklat">
+                    <div class="item-details">
+                        <h3>Mochi Coklat</h3>
+                        <p class="price">Rp 15.000</p>
+                        <div class="quantity-control">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="remove-btn">Hapus</button>
+                    </div>
+                </div>
+
+                <div class="cart-item">
+                    <img src="mochi2.jpg" alt="Mochi Stroberi">
+                    <div class="item-details">
+                        <h3>Mochi Stroberi</h3>
+                        <p class="price">Rp 18.000</p>
+                        <div class="quantity-control">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="2" min="1" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="remove-btn">Hapus</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="checkout">
+                <h2>Checkout</h2>
+                <div class="summary">
+                    <p>Total Harga: <span class="total-price">Rp 51.000</span></p>
+                    <button class="checkout-btn">Lanjut ke Pembayaran</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Toko Mochi. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
