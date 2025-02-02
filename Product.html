@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOCHI! Mochi Ice Cream Collection</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="YOCHI! Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="product-collection">
+            <h1>Discover Our Mochi Yogurt Flavors</h1>
+            <div class="product-grid" id="productGrid"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 YOCHI! Mochi Yogurt. All rights reserved.</p>
+    </footer>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #ffcda541;
+            overflow: auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffcda550;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .logo img {
+            height: 50px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+        }
+        nav li {
+            margin-left: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .product-collection {
+            padding: 20px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            grid-row-gap: 20%;
+            margin-bottom: 50%;
+        }
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #ffcda550;
+            position: relative; /* Add this */
+        }
+        .product:hover .product-title{
+            color: #FF71CD;
+            transition: 0.15s;
+            text-decoration: underline;
+        }
+
+        .product:not(:hover) .product-title {
+            color: #3f3e3e; /* Original color */
+            transition: 0.15s;
+            text-decoration: none;
+        }
+
+        .product-title{
+            font-size: 26px;
+            position: absolute;
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;  /* Ensure all images have the same height */
+            object-fit: cover;
+            transition: opacity 0.3s ease-in-out; /* Smooth transition */
+        }
+
+        .product:hover img.hover-image {
+            opacity: 1;
+        }
+
+        .product img.hover-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .product:hover img{
+            opacity: 0;
+        }
+    </style>
+
+    <script>
+const products = [
+    { name: "Strawberry Delight", image: "mascot.png", hoverImage: "logo.png" },
+    { name: "Matcha Green Tea", image: "mascot.png", hoverImage: "logo.png" },
+    { name: "Mango Passion", image: "mascot.png", hoverImage: "logo.png" },
+    { name: "Chocolate Truffle", image: "mascot.png", hoverImage: "logo.png" },
+    { name: "Jamur", image: "mascot.png", hoverImage: "logo.png" }
+];
+
+const productGrid = document.getElementById("productGrid");
+
+// Preload hover images
+products.forEach(product => {
+    const imgPreload = new Image();
+    imgPreload.src = product.hoverImage;
+});
+
+products.forEach(product => {
+    const productDiv = document.createElement("div");
+    productDiv.classList.add("product");
+
+    const imgDefault = document.createElement("img");
+    imgDefault.src = product.image;
+    imgDefault.classList.add("default-image");
+
+    const imgHover = document.createElement("img");
+    imgHover.src = product.hoverImage;
+    imgHover.classList.add("hover-image");
+
+    const title = document.createElement("h3");
+    title.classList.add("product-title");
+    title.textContent = product.name;
+
+    productDiv.appendChild(imgDefault);
+    productDiv.appendChild(imgHover);
+    productDiv.appendChild(title);
+    productGrid.appendChild(productDiv);
+});
+
+
+
+    </script>
+</body>
+</html>

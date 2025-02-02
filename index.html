@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Chewy&family=DynaPuff:wdth,wght@87.5,400..700&family=Jacquard+12&family=Margarine&display=swap" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;700&display=swap" rel="stylesheet">
     <title>Yochi Layout</title>
     <style>
-        body {
+        /* General Styles */
+        body, html {
             margin: 0;
-            font-family: "DynaPuff", serif;
-            color: #333333; /* Neutral text color */
+            padding: 0;
+            height: 100%;
+            font-family: 'DynaPuff', cursive;
+            background-color: #FFE5E5;
             overflow: hidden;
-            background-color: rgb(255, 223, 229);
         }
 
+        /* Container Layout */
         .container {
             display: flex;
             flex-direction: column;
@@ -23,28 +26,32 @@
             height: 100vh;
         }
 
-        .header,
-        .footer {
+        /* Header and Footer */
+        .header, .footer {
             height: 6%;
             display: flex;
             align-items: center;
             background-color: #FFDDC1;
-            position: static;
             z-index: 1;
         }
 
         .header {
             justify-content: space-between;
+            padding: 0 10%;
         }
 
         .menu {
             display: flex;
             gap: 30px;
             font-size: 16px;
-            margin-right: auto;
-            padding-left: 10%;
         }
 
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
         .main {
             position: relative;
             display: flex;
@@ -53,16 +60,12 @@
             z-index: 1;
         }
 
-        @keyframes main-in{
-            from{
-                opacity: 0;
-                transform: translateY(-100px);
-            }
-            to{
-                opacity: 1;
-            }
+        @keyframes main-in {
+            from { opacity: 0; transform: translateY(-100px); }
+            to { opacity: 1; }
         }
 
+        /* Slogan Section */
         .slogan-container {
             flex: 1;
             display: flex;
@@ -70,17 +73,36 @@
             justify-content: center;
             align-items: flex-start;
             padding-left: 5vw;
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
+            user-select: none;
         }
 
-        .slogan-container .slogan {
+        .slogan {
             font-size: 100px;
             font-weight: bold;
             margin-bottom: 20px;
         }
 
+        .word {
+            color: #ffedde;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+
+        .word:hover {
+            color: #ff66c4;
+            transform: scale(1.1);
+            animation: clickedAnimation 0.5s ease-out;
+        }
+
+        @keyframes clickedAnimation {
+            0% { transform: scale(1); color: #ff66c4; }
+            50% { transform: scale(1.3) rotate(var(--rotation-angle, 20deg)); color: #ffade0; }
+            100% { transform: scale(1.1); color: #ff66c4; }
+        }
+
+        /* Buttons */
         .button-group {
             display: flex;
             gap: 20px;
@@ -99,303 +121,202 @@
             text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
         }
 
-        .button-group button:hover{
+        .button-group button:hover {
             background-color: #ffcea5;
             color: #ff73c9;
             transform: scale(1.05);
         }
 
-        .button-primary {
-            background-color: #fdd1ad; 
+        .button-primary, .button-secondary {
+            background-color: #fdd1ad;
             color: #fc89d0;
         }
 
-        .button-secondary {
-            background-color: #fdd1ad; 
-            color: #fc89d0;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .word {
-            color: #ffedde;
-            display: inline-block;
-            cursor: pointer;
-            transition: transform 0.3s ease, color 0.3s ease;
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        }
-
-        .word:hover {
-            color: #ff66c4;
-            transform: scale(1.1);
-            animation: clickedAnimation 0.5s ease-out;
-        }
-
-        @keyframes clickedAnimation {
-            0% {
-                transform: scale(1);
-                color: #ff66c4;
-            }
-            50% {
-                transform: scale(1.3) rotate(var(--rotation-angle, 20deg)); /* Use CSS variable for rotation */
-                color: #ffade0;
-            }
-            100% {
-                transform: scale(1.1);
-                color: #ff66c4;
-            }
-        }
-
-        .yochi-container{
+        /* Yochi Text Animation */
+        .yochi-container {
             width: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 5%;
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
+            user-select: none;
         }
 
-        .yochi{
+        .yochi {
             font-size: 250px;
             display: inline-block;
-            text-shadow:  -7px 0 #ffdf8f, 0 7px #ffe091, 7px 0 #ffd670, 0 -7px #ffda7d, 10px 10px #ff8ed4, 15px 15px #ffa8de;
+            text-shadow: -7px 0 #ffdf8f, 0 7px #ffe091, 7px 0 #ffd670, 0 -7px #ffda7d, 10px 10px #ff8ed4, 15px 15px #ffa8de;
             color: #ffedde;
         }
 
-        .text1{
-            transform: rotate(-4deg);
-            animation: text1 2s infinite alternate ease-in-out;
-        }
-        .text2{
-            transform: rotate(12deg)  translate(-22px, 3px);
-            animation: text2 2s infinite alternate ease-in-out;
-        }
-        .text3{
-            transform: rotate(-10deg) translate(-22px, -2px);
-            animation: text3 2s infinite alternate ease-in-out;
-        }
-        .text4{
-            transform: rotate(-8deg) translate(-20px, -10px);
-            animation: text4 2s infinite alternate ease-in-out;
-        }
-        .text5{
-            transform: rotate(3deg) translate(-20px, -5px);
-            animation: text5 2s infinite alternate ease-in-out;
-        }
-        .text6{
-            transform: rotate(14deg) translate(-14px, 1px);
-            animation: text6 2s infinite alternate ease-in-out;
-        }
+        .text1 { transform: rotate(-4deg); animation: text1 2s infinite alternate ease-in-out; }
+        .text2 { transform: rotate(12deg) translate(-22px, 3px); animation: text2 2s infinite alternate ease-in-out; }
+        .text3 { transform: rotate(-10deg) translate(-22px, -2px); animation: text3 2s infinite alternate ease-in-out; }
+        .text4 { transform: rotate(-8deg) translate(-20px, -10px); animation: text4 2s infinite alternate ease-in-out; }
+        .text5 { transform: rotate(3deg) translate(-20px, -5px); animation: text5 2s infinite alternate ease-in-out; }
+        .text6 { transform: rotate(14deg) translate(-14px, 1px); animation: text6 2s infinite alternate ease-in-out; }
 
-        @keyframes text1{
-            0%{
-                transform: rotate(-4deg) translateX(10px);
-            }
-            50%{
-                transform: rotate(4deg);
-            }
-        }
+        @keyframes text1 { 0% { transform: rotate(-4deg) translateX(10px); } 50% { transform: rotate(4deg); } }
+        @keyframes text2 { 0% { transform: rotate(12deg) translateX(10px); } 50% { transform: rotate(-12deg); } }
+        @keyframes text3 { 0% { transform: rotate(-10deg) translateX(10px); } 50% { transform: rotate(10deg); } }
+        @keyframes text4 { 0% { transform: rotate(-8deg) translateX(10px); } 50% { transform: rotate(8deg); } }
+        @keyframes text5 { 0% { transform: rotate(3deg) translateX(10px); } 50% { transform: rotate(-3deg); } }
+        @keyframes text6 { 0% { transform: rotate(14deg) translateX(10px); } 50% { transform: rotate(-14deg); } }
 
-        @keyframes text2{
-            0%{
-                transform: rotate(12deg) translateX(10px);
-            }
-            50%{
-                transform: rotate(-12deg);
-            }
-        }
-
-        @keyframes text3{
-            0%{
-                transform: rotate(-10deg) translateX(10px);
-            }
-            50%{
-                transform: rotate(10deg);
-            }
-        }
-
-        @keyframes text4{
-            0%{
-                transform: rotate(-8deg) translateX(10px);
-            }
-            50%{
-                transform: rotate(8deg);
-            }
-        }
-
-        @keyframes text5{
-            0%{
-                transform: rotate(3deg) translateX(10px);
-            }
-            50%{
-                transform: rotate(-3deg);
-            }
-        }
-
-        @keyframes text6{
-            0%{
-                transform: rotate(14deg) translateX(10px);
-            }
-            50%{
-                transform: rotate(-14deg);
-            }
-        }
-
+        /* Dots Animation */
         .dot-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0; /* Ensure it stays in the background */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: move 4s infinite ease-in-out;
+        }
+
+        @keyframes move {
+            0% { transform: scale(0) translate(0, 0); opacity: 0; }
+            50% { transform: scale(1) translate(100px, 100px); opacity: 1; }
+            100% { transform: scale(0) translate(0, 0); opacity: 0; }
+        }
+
+        /* Loading Screen */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFE5E5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: transform 1s ease-in-out;
+        }
+
+        .loading-container.slide-out {
+            transform: translateY(-100%);
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 30px;
+            background-color: #FFD6E0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, #FFAFC5, #FFAFC5 10px, #FFB9CC 10px, #FFB9CC 20px);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+        }
+
+        .yochi-text {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #FF85A1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-text {
+            margin-top: 10px;
+            color: #FF85A1;
+            font-size: 1.2em;
+        }
+
+        .sprinkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #FFF;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .product-carousel {
+  text-align: center;
+  width: 100%;
 }
 
-.dot {
+.carousel-container {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden; /* Hide the overflow */
+  display: flex; /* Make sure the container is flexbox */
+  justify-content: flex-start; /* Align items to the start */
+  gap: 10px; /* Add space between items */
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  width: auto; /* Let items take up their natural width */
+  margin-right: 10px; /* Add some space between the items */
+  flex-shrink: 0; /* Prevent the items from shrinking */
+  text-align: center;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.carousel-button {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: white;
-  border-radius: 50%;
-  opacity: 0;
-  animation: move 4s infinite ease-in-out;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 2;
 }
 
-@keyframes move {
-  0% {
-    transform: scale(0) translate(0, 0);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1) translate(100px, 100px);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0) translate(0, 0);
-    opacity: 0;
-  }
+.prev {
+  left: 10px;
 }
 
-.image-above {
-    position: absolute;
-    top: -100px; /* Adjust this value to position it above the "I!" */
-    left: 90%;
-    transform: translateX(-50%);
+.next {
+  right: 10px;
 }
 
-.image-below {
-    position: absolute;
-    top:  390px; /* Adjust this value to position it below "YO" */
-    left: 64%;
-    transform: translateX(-50%);
-}
-
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;700&display=swap');
-
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'DynaPuff', cursive;
-    background-color: #FFE5E5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.loading-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #FFE5E5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    transition: transform 1s ease-in-out;
-}
-
-.loading-container.slide-out {
-    transform: translateY(-100%);
-}
-
-.progress-bar {
-    width: 300px;
-    height: 30px;
-    background-color: #FFD6E0;
-    border-radius: 15px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.progress {
-    width: 0%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        45deg,
-        #FFAFC5,
-        #FFAFC5 10px,
-        #FFB9CC 10px,
-        #FFB9CC 20px
-    );
-    border-radius: 15px;
-    transition: width 0.5s ease;
-}
-
-.yochi-text {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #FF85A1;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-}
-
-.loading-text {
-    margin-top: 10px;
-    color: #FF85A1;
-    font-size: 1.2em;
-}
-
-.sprinkle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #FFF;
-    animation: float 3s infinite ease-in-out;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.cute-button {
-    background-color: #FFAFC5;
-    border: none;
-    padding: 10px 20px;
-    font-family: 'DynaPuff', cursive;
-    font-size: 1em;
-    color: white;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.cute-button:hover {
-    background-color: #FF85A1;
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
     <div class="loading-container" id="loadingContainer">
         <div class="yochi-text">YOCHI!</div>
         <div class="progress-bar">
@@ -404,6 +325,7 @@ body, html {
         <div class="loading-text">Loading yummy goodness...</div>
     </div>
 
+    <!-- Main Content -->
     <div class="container">
         <div class="header">
             <div class="logo">Logo</div>
@@ -428,8 +350,6 @@ body, html {
                 </div>
             </div>
             <div class="yochi-container">
-                <img src="mascot.png" alt="image" class="image-above">
-                <img src="mascot.png" alt="image" class="image-below">
                 <span class="text1 yochi">Y</span>
                 <span class="text2 yochi">O</span>
                 <span class="text3 yochi">C</span>
@@ -438,10 +358,24 @@ body, html {
                 <span class="text6 yochi">!</span>
             </div>
         </div>
+        <section id="product-carousel" class="product-carousel">
+  <h2>Our Products</h2>
+  <div class="carousel-container">
+    <div class="carousel-wrapper" id="carousel-wrapper">
+      <!-- Carousel items will be inserted here dynamically -->
+    </div>
+    <button class="carousel-button prev" onclick="moveSlide(-1)">&#10094;</button>
+    <button class="carousel-button next" onclick="moveSlide(1)">&#10095;</button>
+  </div>
+</section>
         <div class="footer"></div>
     </div>
 
+    <!-- Dots Animation Container -->
+    <div class="dot-container"></div>
+
     <script>
+        // Loading Screen Logic
         function setProgress(percent) {
             const progressBar = document.getElementById('progressBar');
             progressBar.style.width = percent + '%';
@@ -465,8 +399,7 @@ body, html {
             loadingContainer.classList.add('slide-out');
             setTimeout(() => {
                 loadingContainer.style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-            }, 1000); // Match the duration of the slide-out animation
+            }, 1000);
         }
 
         let progress = 0;
@@ -481,41 +414,61 @@ body, html {
         }, 200);
 
         addSprinkles();
-        
-       document.querySelectorAll('.word').forEach((word) => {
-  word.addEventListener('mouseenter', () => {
-    // Generate a random rotation direction (clockwise or counterclockwise)
-    const direction = Math.random() > 0.5 ? 1 : -1; // 1 for clockwise, -1 for counterclockwise
-    const rotationAngle = direction * 20; // Rotate 20 degrees in the chosen direction
 
-    // Set the CSS variable for rotation
-    word.style.setProperty('--rotation-angle', `${rotationAngle}deg`);
-  });
+        // Word Hover Animation
+        document.querySelectorAll('.word').forEach((word) => {
+            word.addEventListener('mouseenter', () => {
+                const direction = Math.random() > 0.5 ? 1 : -1;
+                const rotationAngle = direction * 20;
+                word.style.setProperty('--rotation-angle', `${rotationAngle}deg`);
+            });
+        });
+
+        // Array of product images (you can add more product objects with name, description, etc.)
+const products = [
+  { img: 'product1.jpg', alt: 'Product 1' },
+  { img: 'product2.jpg', alt: 'Product 2' },
+  { img: 'product3.jpg', alt: 'Product 3' },
+  { img: 'product4.jpg', alt: 'Product 4' },
+  { img: 'product5.jpg', alt: 'Product 5' }
+];
+
+// Dynamically generate carousel items based on the product array
+const carouselWrapper = document.getElementById('carousel-wrapper');
+
+products.forEach(product => {
+  const carouselItem = document.createElement('div');
+  carouselItem.classList.add('carousel-item');
+
+  const imgElement = document.createElement('img');
+  imgElement.src = product.img;
+  imgElement.alt = product.alt;
+
+  carouselItem.appendChild(imgElement);
+  carouselWrapper.appendChild(carouselItem);
 });
 
-const dotContainer = document.querySelector('.dot-container');
+// Carousel navigation
+let currentIndex = 0;
 
-// Function to create a random dot
-function createDot() {
-  const dot = document.createElement('div');
-  dot.classList.add('dot');
+function moveSlide(step) {
+  const totalSlides = products.length;
   
-  // Randomize dot position
-  const xPos = Math.random() * window.innerWidth;
-  const yPos = Math.random() * window.innerHeight;
-  dot.style.left = `${xPos}px`;
-  dot.style.top = `${yPos}px`;
-  
-  dotContainer.appendChild(dot);
+  // Calculate the new index, ensuring it loops around
+  currentIndex += step;
+  if (currentIndex < 0) {
+    currentIndex = totalSlides - 1; // Loop to the last product
+  } else if (currentIndex >= totalSlides) {
+    currentIndex = 0; // Loop to the first product
+  }
 
-  // Remove dot after animation ends
-  dot.addEventListener('animationend', () => {
-    dot.remove();
-  });
+  // Calculate how much to shift (each image width)
+  const carouselItemWidth = document.querySelector('.carousel-item').offsetWidth;
+  const shiftAmount = carouselItemWidth * currentIndex;
+
+  // Move the carousel by shifting the position
+  carouselWrapper.style.transform = `translateX(-${shiftAmount}px)`;
 }
-
-// Create multiple dots at intervals
-setInterval(createDot, 500);
 
     </script>
 </body>
