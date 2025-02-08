@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOCHI! Mochi Yogurt Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Chewy&family=DynaPuff:wdth,wght@87.5,400..700&family=Gabarito:wght@400..900&family=Jacquard+12&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Margarine&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: "Gabarito", serif;
+            background-image: url('images/product_background1.png'), url('images/product_background2.png');
+            background-position: top center, bottom center;
+            background-repeat: no-repeat, no-repeat;
+            background-color: #fffdf0;
+            margin: 0;
+            padding: 0;
+            color: #794874;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "DynaPuff", serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+/* Navbar Styles */
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    width: 130px;
+    height: auto;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-links a {
+    color: #794874;
+    text-decoration: none;
+    font-family: "DynaPuff", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+    color: #ffcccc;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #794874;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-actions button:hover {
+    color: #ffcccc;
+}
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+    }
+    
+    .navbar-content {
+        justify-content: space-between;
+    }
+}
+
+        /* Search and Filter Bar Styles */
+        .search-filter-bar {
+            background-color: #f0f0f0;
+            padding: 20px 0;
+        }
+
+        .search-filter-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .search-container {
+            flex-grow: 1;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-container input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-container select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* New Filter Styles */
+        .filter-button {
+            background-color: #fbeee0;
+            border: 2px solid #422800;
+            border-radius: 30px;
+            color: #794874;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 20px;
+            transition: all 0.2s;
+        }
+
+        .filter-button:hover {
+            background-color: #d1c7bd;
+        }
+
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            width: 200px;
+        }
+
+        .filter-category {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .filter-category:hover {
+            background-color: #f0f0f0;
+        }
+
+        .filter-options {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px;
+            width: 200px;
+            z-index: 1000;
+        }
+
+        .filter-options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .price-range {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .price-range input {
+            width: 70px;
+        }
+
+
+        /* Product Grid Styles */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .product {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        .product img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .product .hover-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .product:hover .default-image {
+            opacity: 0;
+        }
+
+        .product:hover .hover-image {
+            opacity: 1;
+        }
+
+        .product-title {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Highlights Section Styles */
+        .highlights {
+            background-color: white;
+            padding: 50px 0;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .highlight-item {
+            text-align: center;
+        }
+
+        .highlight-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #794874;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover img {
+            width: 220px;
+            height: 220px;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #794874;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button Styles */
+        .button-74 {
+            background-color: #fbeee0;
+            border: 2px solid #422800;
+            border-radius: 30px;
+            box-shadow: #422800 4px 4px 0 0;
+            color: #794874;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 0 18px;
+            line-height: 50px;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            transition: all 0.2s;
+        }
+
+        .button-74:hover {
+            background-color: #d1c7bd;
+        }
+
+        .button-74:active {
+            box-shadow: #422800 2px 2px 0 0;
+            transform: translate(2px, 2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .highlights-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .highlight-item img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .highlight-item:hover img {
+                width: 170px;
+                height: 170px;
+            }
+        }
+
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 1000px;
+    position: relative;
+}
+
+.product-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.product-images {
+    position: relative;
+}
+
+.product-images img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-info h2 {
+    font-size: 24px;
+    color: #794874;
+    margin: 0;
+}
+
+.price {
+    font-size: 28px;
+    font-weight: bold;
+    color: #794874;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.star {
+    color: #ffd700;
+    font-size: 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.actions button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.add-to-cart {
+    background-color: #ffcccc;
+    border: none;
+    color: #794874;
+}
+
+.add-to-favorites {
+    background-color: white;
+    border: 2px solid #ffcccc;
+    color: #794874;
+}
+
+.ingredients {
+    margin-top: 20px;
+}
+
+.ingredients h3 {
+    color: #794874;
+    margin-bottom: 10px;
+}
+
+.reviews {
+    margin-top: 20px;
+}
+
+.reviews h3 {
+    color: #794874;
+    margin-bottom: 10px;
+}
+
+.review-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.review-rating {
+    color: #ffd700;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #794874;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ffcccc;
+}
+
+@media (max-width: 768px) {
+    .product-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 0;
+        min-height: 100vh;
+        border-radius: 0;
+    }
+}
+
+.mini-modal {
+    position: fixed;
+    top: 87px;
+    right: 330px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+}
+
+.mini-modal h4 {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+
+.mini-modal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mini-modal li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.mini-modal .quick-add {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.mini-modal .quick-add:hover {
+    background-color: #0056b3;
+}
+
+.mini-modal .remove-favorite {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.mini-modal .remove-favorite:hover {
+    background-color: #a71d2a;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/" class="navbar-brand">
+                <img src="images/logo.png" alt="YOCHI! Logo">
+            </a>
+            <ul class="navbar-links">
+                <li><a href="product.html">Products</a></li>
+                <li><a href="contact.html">About Us</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button id="notificationsBtn" title="Notifications">🔔</button>
+                <a href="layout-checkout.html"><button title="Cart">🛒</button></a>
+                <button id="favoriteBtn" title="Favorites">🤍</button>
+                <a href="profile.html"><button title="Profile">👤</button></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mini Modal for Favorites -->
+<div class="mini-modal" id="favoriteModal">
+    <h4>Your Favorites</h4>
+    <ul id="favoriteList">
+        <!-- Dynamically populated list of favorite items -->
+    </ul>
+</div>
+
+    <div class="search-filter-bar">
+        <div class="container search-filter-content">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search for flavors..." oninput="updateRecommendations()">
+                    <div id="searchSuggestions" class="search-suggestions"></div>
+                </div>
+                <button class="button-74" onclick="filterProducts()">Search</button>
+            </div>
+            <div class="filter-container">
+                <button id="filterButton" class="filter-button">Filter</button>
+                <div id="filterDropdown" class="filter-dropdown">
+                    <div class="filter-category" data-category="flavours">Flavours</div>
+                    <div class="filter-category" data-category="price">Price</div>
+                    <div class="filter-category" data-category="rating">Rating</div>
+                    <div class="filter-category" data-category="sort">Sort By</div>
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Filter Options -->
+    <div id="flavoursOptions" class="filter-options">
+        <!-- Flavor checkboxes will be dynamically inserted here -->
+    </div>
+
+    <div id="priceOptions" class="filter-options">
+        <div class="price-range">
+            <input type="number" id="minPrice" placeholder="Min" min="0">
+            <input type="number" id="maxPrice" placeholder="Max" min="0">
+        </div>
+        <div class="price-ranges">
+            <label><input type="radio" name="priceRange" value="0-10"> $0–$10</label>
+            <label><input type="radio" name="priceRange" value="10-15"> $10–$15</label>
+            <label><input type="radio" name="priceRange" value="15+"> $15+</label>
+        </div>
+    </div>
+
+    <div id="ratingOptions" class="filter-options">
+        <select id="minRating">
+            <option value="0">Any Rating</option>
+            <option value="3">3+ Stars</option>
+            <option value="4">4+ Stars</option>
+            <option value="5">5 Stars</option>
+        </select>
+    </div>
+
+    <div id="sortOptions" class="filter-options">
+        <label><input type="checkbox" name="sort" value="popular"> Most Popular</label>
+        <label><input type="checkbox" name="sort" value="purchased"> Most Purchased</label>
+        <label><input type="checkbox" name="sort" value="favorited"> Most Favorited</label>
+    </div>
+
+    <main class="container">
+        <section class="product-collection">
+            <h1>DISCOVER OUR</h1>
+            <h1>YOCHI! FLAVORS</h1>
+            <a href="index.html" class="button-74">Back to Home</a>
+        </section>
+
+        <div id="productGrid" class="product-grid">
+            <!-- Product items will be dynamically inserted here -->
+        </div>
+
+        <!-- No Results Message -->
+  <div id="noResultsMessage" style="display: none;">No products found. Try adjusting your filters.</div>
+
+            <!-- Add modal structure -->
+            <div id="productModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="modalContent"></div>
+                </div>
+            </div>
+    </main>
+
+    <section class="highlights">
+        <div class="container">
+            <h2>Why Choose YOCHI!?</h2>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <img src="images/creamy.png" alt="Creamy Yoghurt">
+                    <h5>Creamy Yoghurt</h5>
+                    <p>Rich and smooth texture.</p>
+                </div>
+                <div class="highlight-item">
+                    <img src="images/soft.png" alt="Soft Mochi">
+                    <h5>Soft Mochi</h5>
+                    <p>Chewy and delightful.</p>
+                </div>
+                <div class="highlight-item">
+                    <img src="images/natural.png" alt="All-Natural">
+                    <h5>All-Natural Ingredients</h5>
+                    <p>No artificial additives.</p>
+                </div>
+                <div class="highlight-item">
+                    <img src="images/portable.png" alt="Portable Snack">
+                    <h5>Perfectly Portable</h5>
+                    <p>Enjoy anywhere, anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 YOCHI!. All rights reserved. Designed by Φ.</p>
+            <div>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+// ----------------------------
+// Product Data and Constants
+// ----------------------------
+
+const products = [
+{
+    name: "Strawberry Delight",
+    image: "images/Strawberry.jpg",
+    hoverImage: "images/strawberry-hover.png",
+    rating: 4.3,
+    price: 12.99,
+    description: "Juicy strawberry filling wrapped in creamy yogurt mochi",
+    details: "Contains real strawberry puree. 150 calories per piece.",
+    flavor: "strawberry",
+    reviews: [
+      {
+        user: "Emily R.",
+        rating: 5,
+        comment: "The strawberry flavor is so authentic! Love how the sweetness isn't overwhelming.",
+      },
+      { user: "David K.", rating: 4, comment: "Perfect summer treat. The yogurt filling is refreshing." },
+    ],
+  },
+  {
+    name: "Matcha Green Tea",
+    image: "images/flavor_matcha.jpg",
+    hoverImage: "images/matcha-hover.png",
+    rating: 4.8,
+    price: 14.99,
+    description: "Premium matcha flavor with smooth yogurt filling",
+    details: "Contains green tea extract. 140 calories per piece.",
+    flavor: "matcha",
+    reviews: [
+      { user: "Akiko T.", rating: 5, comment: "Authentic matcha taste! Reminds me of Japanese desserts." },
+      { user: "Michael L.", rating: 5, comment: "Perfect balance of matcha and yogurt. Not too sweet!" },
+    ],
+  },
+  {
+    name: "Mango Bliss",
+    image: "images/flavor_mango.jpg",
+    hoverImage: "images/mango-hover.png",
+    rating: 3.7,
+    price: 13.99,
+    description: "Tropical mango filling in soft yogurt mochi",
+    details: "Made with ripe mango pulp. 160 calories per piece.",
+    flavor: "mango",
+    reviews: [
+      { user: "Sophie W.", rating: 5, comment: "Tastes like fresh mangoes! The tropical flavor is perfect." },
+      { user: "James H.", rating: 4, comment: "Great summer flavor, very refreshing." },
+    ],
+  },
+  {
+    name: "Chocolate Dream",
+    image: "images/flavor_chocolate.jpg",
+    hoverImage: "images/chocolate-hover.png",
+    rating: 4.6,
+    price: 15.99,
+    description: "Rich chocolate center with creamy yogurt coating",
+    details: "Contains dark chocolate. 170 calories per piece.",
+    flavor: "chocolate",
+    reviews: [
+      { user: "Maria C.", rating: 5, comment: "The chocolate filling is divine! Not too sweet, just perfect." },
+      { user: "Tom B.", rating: 4, comment: "Great combination of chocolate and yogurt. Very unique!" },
+    ],
+  },
+    { 
+        name: "Blueberry Burst", 
+        image: "images/flavor_blueberry.jpg", 
+        hoverImage: "images/blueberry-hover.png",
+        rating: 4.4,
+        price: 12.99,
+        description: "Bursting with blueberry goodness in every bite",
+        details: "Sweet and tangy blueberry filling. 155 calories per piece.",
+        flavor: "blueberry"
+    },
+    { 
+        name: "Peach Paradise", 
+        image: "images/peach.png", 
+        hoverImage: "images/peach-hover.png",
+        rating: 4.1,
+        price: 13.49,
+        description: "Juicy peach flavor encased in soft yogurt mochi",
+        details: "Made with fresh peach juice. 150 calories per piece.",
+        flavor: "peach"
+    },
+    { 
+        name: "Raspberry Ripple", 
+        image: "images/raspberry.png", 
+        hoverImage: "images/raspberry-hover.png",
+        rating: 4.5,
+        price: 12.99,
+        description: "Tangy raspberry filling with a creamy yogurt twist",
+        details: "Naturally sweetened with raspberry puree. 145 calories per piece.",
+        flavor: "raspberry"
+    },
+    { 
+        name: "Lemon Zest", 
+        image: "images/lemon.png", 
+        hoverImage: "images/lemon-hover.png",
+        rating: 4.7,
+        price: 11.99,
+        description: "Zesty lemon filling in a chewy yogurt mochi shell",
+        details: "Citrusy and refreshing. 130 calories per piece.",
+        flavor: "lemon"
+    },
+    { 
+        name: "Coconut Cream", 
+        image: "images/coconut.png", 
+        hoverImage: "images/coconut-hover.png",
+        rating: 3.8,
+        price: 14.49,
+        description: "Creamy coconut filling wrapped in yogurt mochi",
+        details: "Made with real coconut milk. 165 calories per piece.",
+        flavor: "coconut"
+    },
+    { 
+        name: "Vanilla Bean", 
+        image: "images/flavor_vanilla.jpg", 
+        hoverImage: "images/vanilla-hover.png",
+        rating: 4.5,
+        price: 12.99,
+        description: "Classic vanilla bean flavor with a yogurt twist",
+        details: "Infused with real vanilla beans. 140 calories per piece.",
+        flavor: "vanilla"
+    },
+    { 
+        name: "Pistachio Pleasure", 
+        image: "images/pistachio.png", 
+        hoverImage: "images/pistachio-hover.png",
+        rating: 4,
+        price: 16.99,
+        description: "Nutty pistachio filling in a creamy yogurt mochi",
+        details: "Made with roasted pistachios. 180 calories per piece.",
+        flavor: "pistachio"
+    },
+    { 
+        name: "Black Sesame Bliss", 
+        image: "images/black-sesame.png", 
+        hoverImage: "images/black-sesame-hover.png",
+        rating: 4.2,
+        price: 13.99,
+        description: "Earthy black sesame flavor with a yogurt coating",
+        details: "Rich in antioxidants. 150 calories per piece.",
+        flavor: "black sesame"
+    },
+    { 
+        name: "Passion Fruit Punch", 
+        image: "images/passion-fruit.png", 
+        hoverImage: "images/passion-fruit-hover.png",
+        rating: 4.5,
+        price: 14.99,
+        description: "Exotic passion fruit filling in a chewy yogurt mochi",
+        details: "Tangy and sweet. 155 calories per piece.",
+        flavor: "passion fruit"
+    },
+    { 
+        name: "Lychee Love", 
+        image: "images/lychee.png", 
+        hoverImage: "images/lychee-hover.png",
+        rating: 4.6,
+        price: 13.99,
+        description: "Delicate lychee flavor wrapped in creamy yogurt mochi",
+        details: "Made with natural lychee extract. 145 calories per piece.",
+        flavor: "lychee"
+    },
+    { 
+        name: "Durian Delight", 
+        image: "images/durian.png", 
+        hoverImage: "images/durian-hover.png",
+        rating: 3.1,
+        price: 21,
+        description: "Bold durian flavor for adventurous taste buds",
+        details: "Made with premium durian fruit. 190 calories per piece.",
+        flavor: "durian"
+    },
+    { 
+        name: "Green Apple Crunch", 
+        image: "images/green-apple.png", 
+        hoverImage: "images/green-apple-hover.png",
+        rating: 4.5,
+        price: 12.99,
+        description: "Crisp green apple filling in a soft yogurt mochi",
+        details: "Tart and refreshing. 135 calories per piece.",
+        flavor: "green apple"
+    }
+];
+
+// ----------------------------
+// DOM Elements
+// ----------------------------
+const dom = {
+    productGrid: document.getElementById("productGrid"),
+    searchInput: document.getElementById("searchInput"),
+    searchSuggestions: document.getElementById("searchSuggestions"),
+    filterButton: document.getElementById("filterButton"),
+    filterDropdown: document.getElementById("filterDropdown"),
+    filterOptions: document.querySelectorAll('.filter-options'),
+    noResultsMessage: document.getElementById("noResultsMessage"),
+    productModal: document.getElementById("productModal"),
+    modalContent: document.getElementById("modalContent"),
+    // Add other DOM elements as needed
+};
+
+// ----------------------------
+// Core Functions
+// ----------------------------
+function renderProducts(productsToRender) {
+    dom.productGrid.innerHTML = "";
+    dom.noResultsMessage.style.display = productsToRender.length ? "none" : "block";
+
+    productsToRender.forEach(product => {
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("product");
+        productDiv.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="default-image">
+            <img src="${product.hoverImage}" alt="${product.name}" class="hover-image">
+            <h3 class="product-title">${product.name}</h3>
+        `;
+        productDiv.addEventListener("click", () => showProductModal(product));
+        dom.productGrid.appendChild(productDiv);
+    });
+}
+
+function filterProducts() {
+    const searchQuery = dom.searchInput.value.toLowerCase();
+    const selectedFlavors = Array.from(document.querySelectorAll('input[name="flavour"]:checked')).map(cb => cb.value.toLowerCase());
+    const minPrice = parseFloat(document.getElementById("minPrice").value) || 0;
+    const maxPrice = parseFloat(document.getElementById("maxPrice").value) || Infinity;
+    const minRating = parseFloat(document.getElementById("minRating").value) || 0;
+
+    const filtered = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(searchQuery) || 
+                            product.flavor.toLowerCase().includes(searchQuery);
+        const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.includes(product.flavor.toLowerCase());
+        const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
+        const matchesRating = product.rating >= minRating;
+        
+        return matchesSearch && matchesFlavor && matchesPrice && matchesRating;
+    });
+
+    renderProducts(filtered);
+}
+
+// ----------------------------
+// Search Functionality
+// ----------------------------
+function updateRecommendations() {
+    const input = dom.searchInput.value.toLowerCase();
+    dom.searchSuggestions.innerHTML = "";
+
+    if (input) {
+        const matches = products.filter(product => 
+            product.name.toLowerCase().includes(input) ||
+            product.flavor.toLowerCase().includes(input)
+        ).slice(0, 5);
+
+        matches.forEach(match => {
+            const div = document.createElement("div");
+            div.textContent = match.name;
+            div.classList.add("suggestion-item");
+            div.onclick = () => {
+                dom.searchInput.value = match.name;
+                dom.searchSuggestions.style.display = "none";
+                filterProducts();
+            };
+            dom.searchSuggestions.appendChild(div);
+        });
+
+        dom.searchSuggestions.style.display = matches.length ? "block" : "none";
+    }
+}
+
+// ----------------------------
+// Filter Functionality
+// ----------------------------
+function populateFlavorCheckboxes() {
+    const flavoursOptions = document.getElementById("flavoursOptions");
+    const uniqueFlavors = [...new Set(products.map(product => product.flavor.toLowerCase()))];
+    
+    flavoursOptions.innerHTML = uniqueFlavors
+        .map(flavor => `
+            <label>
+                <input type="checkbox" name="flavour" value="${flavor}">
+                ${flavor.charAt(0).toUpperCase() + flavor.slice(1)}
+            </label>
+        `).join("");
+}
+
+function initializeFilterDropdown() {
+    const filterCategories = document.querySelectorAll('.filter-category');
+    
+    dom.filterButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent clicks on the filter button from propagating
+        dom.filterDropdown.style.display = dom.filterDropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    filterCategories.forEach(category => {
+        category.addEventListener('mouseenter', (e) => {
+            const categoryName = e.target.dataset.category;
+            const options = document.getElementById(`${categoryName}Options`);
+            
+            dom.filterOptions.forEach(opt => opt.style.display = 'none');
+            options.style.display = 'block';
+            
+            const rect = e.target.getBoundingClientRect();
+            options.style.top = `${rect.top}px`;
+            options.style.left = `${rect.left - options.offsetWidth}px`;
+
+            // Prevent clicks inside the options from propagating
+            options.addEventListener('click', (e) => e.stopPropagation());
+        });
+    });
+}
+
+// ----------------------------
+// Modal Functionality
+// ----------------------------
+function showProductModal(product) {
+    const modalContent = document.getElementById("modalContent");
+
+    // Check if the product is already favorited
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isFavorited = favorites.includes(product.name);
+
+    modalContent.innerHTML = `
+        <div class="product-details">
+            <div class="product-images">
+                <img src="${product.image}" alt="${product.name}" class="main-image">
+            </div>
+            <div class="product-info">
+                <h2>${product.name}</h2>
+                <div class="rating">${renderRating(product.rating)}</div>
+                <div class="price">$${product.price.toFixed(2)}</div>
+                <div class="actions">
+                    <button class="add-to-cart" onclick="addToCart('${product.name}')">Add to Cart</button>
+                    <button class="add-to-favorites" onclick="toggleFavorite('${product.name}')">
+                        ${isFavorited ? "❤️ Favorited" : "🤍 Favorite"}
+                    </button>
+                </div>
+                <div class="ingredients">
+                    <h3>Ingredients</h3>
+                    <p>Base: Sweet Rice Flour (Mochiko), Water, Sugar</p>
+                    <p>Filling: Yogurt (Milk, Cream, Active Cultures), ${getIngredientsByFlavor(product.flavor)}</p>
+                    <p>Contains: Milk, May contain traces of nuts</p>
+                </div>
+                <div class="reviews">
+                    <h3>Customer Reviews</h3>
+                    ${product.reviews.map(review => `
+                        <div class="review-item">
+                            <div class="review-header">
+                                <strong>${review.user}</strong>
+                                <span class="review-rating">${renderRating(review.rating)}</span>
+                            </div>
+                            <p>${review.comment}</p>
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById("productModal").style.display = "block";
+}
+
+function getIngredientsByFlavor(flavor) {
+  const ingredients = {
+    strawberry: "Natural Strawberry Puree, Natural Flavors, Beet Color",
+    matcha: "Premium Matcha Green Tea Powder, Natural Flavors",
+    mango: "Natural Mango Puree, Natural Flavors, Beta Carotene Color",
+    chocolate: "Cocoa Powder, Natural Chocolate Flavor",
+    blueberry: "Natural Blueberry Puree, Natural Flavors, Fruit and Vegetable Color",
+    vanilla: "Natural Vanilla Extract, Vanilla Bean Seeds",
+    lychee: "Natural Lychee Extract, Natural Flavors",
+    durian: "Natural Durian Puree, Natural Flavors",
+    "green apple": "Natural Apple Extract, Malic Acid, Natural Colors",
+    "passion fruit": "Natural Passion Fruit Puree, Natural Flavors",
+    coconut: "Coconut Cream, Natural Coconut Extract",
+    pistachio: "Ground Pistachios, Natural Pistachio Extract, Natural Colors",
+  }
+
+  return ingredients[flavor.toLowerCase()] || "Natural Flavors"
+}
+
+        // Rating display function
+        function renderRating(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - Math.ceil(rating);
+    
+    return `
+        ${'★'.repeat(fullStars)}
+        ${hasHalfStar ? '½' : ''}
+        ${'☆'.repeat(emptyStars)}
+        <span>(${rating})</span>
+    `;
+}
+
+        // Favorite button functionality
+        const favoriteBtn = document.getElementById('favoriteBtn');
+const favoriteModal = document.getElementById('favoriteModal');
+let isFavoriteModalOpen = false;
+
+favoriteBtn.addEventListener('click', () => {
+    isFavoriteModalOpen = !isFavoriteModalOpen;
+    favoriteModal.style.display = isFavoriteModalOpen ? 'block' : 'none';
+    updateFavoriteButtonIcon();
+});
+
+function addToFavorites(productName) {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    if (favorites.includes(productName)) {
+        // Remove from favorites
+        favorites = favorites.filter(item => item !== productName);
+        alert(`${productName} removed from favorites.`);
+    } else {
+        // Add to favorites
+        favorites.push(productName);
+        alert(`${productName} added to favorites.`);
+    }
+
+    // Save updated favorites to localStorage
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+
+    // Refresh the modal to reflect the updated favorite status
+    const currentProduct = products.find(product => product.name === productName);
+    showProductModal(currentProduct);
+}
+
+function updateFavoriteButtonIcon() {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    favoriteBtn.textContent = favorites.length > 0 ? '❤️' : '🤍';
+}
+
+// Close the favorite modal when clicking outside
+document.addEventListener('click', (event) => {
+    if (!favoriteBtn.contains(event.target) && !favoriteModal.contains(event.target)) {
+        isFavoriteModalOpen = false;
+        favoriteModal.style.display = 'none';
+    }
+});
+
+// Function to remove a favorite item
+function removeFavorite(productName) {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    // Remove the item from the favorites array
+    favorites = favorites.filter(item => item !== productName);
+
+    // Save updated favorites to localStorage
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+
+    // Reload favorites to reflect changes
+    loadFavorites();
+    alert(`${productName} removed from favorites.`);
+}
+
+// Load favorite items into the mini modal
+function loadFavorites() {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const favoriteList = document.getElementById("favoriteList");
+
+    if (favorites.length === 0) {
+        favoriteList.innerHTML = "<li>No favorites yet.</li>";
+        return;
+    }
+
+    favoriteList.innerHTML = favorites
+        .map(
+            (item) => `
+                <li>
+                    ${item}
+                    <button class="quick-add" onclick="addToCart('${item}')">+</button>
+                    <button class="remove-favorite" onclick="removeFavorite('${item}')">×</button>
+                </li>
+            `
+        )
+        .join("");
+}
+
+// Toggle favorite status
+function toggleFavorite(productName) {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    if (favorites.includes(productName)) {
+        favorites = favorites.filter(item => item !== productName); // Remove from favorites
+    } else {
+        favorites.push(productName); // Add to favorites
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    alert(`${productName} ${favorites.includes(productName) ? "added to" : "removed from"} favorites.`);
+    showProductModal({ name: productName }); // Refresh modal to update button text
+}
+
+// ----------------------------
+// Event Listeners
+// ----------------------------
+function initializeEventListeners() {
+    // Search
+    dom.searchInput.addEventListener("input", () => {
+        updateRecommendations();
+        filterProducts();
+    });
+
+    // Filters
+    document.querySelectorAll('input[name="flavour"], #minPrice, #maxPrice, #minRating').forEach(input => {
+        input.addEventListener("change", filterProducts);
+    });
+
+    // Modal
+    dom.productModal.addEventListener('click', (e) => {
+        if (e.target === dom.productModal) dom.productModal.style.display = 'none';
+    });
+
+    document.querySelector('.close').addEventListener('click', () => {
+        dom.productModal.style.display = 'none';
+    });
+
+    // Notifications
+    document.getElementById("notificationsBtn").addEventListener("click", () => {
+        alert("Notifications: \n1. New flavor alert: Mango Tango! \n2. Your order has been shipped. \n3. 20% off on all products this weekend!");
+    });
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+    const isInsideFilterContainer = e.target.closest('.filter-container');
+    const isInsideFilterOptions = e.target.closest('.filter-options');
+
+    // Only close the dropdown if the click is outside both the filter container and filter options
+    if (!isInsideFilterContainer && !isInsideFilterOptions) {
+        dom.filterDropdown.style.display = 'none';
+        dom.filterOptions.forEach(opt => opt.style.display = 'none');
+    }
+});
+
+// ----------------------------
+// Initialization
+// ----------------------------
+function initialize() {
+    populateFlavorCheckboxes();
+    initializeFilterDropdown();
+    initializeEventListeners();
+    renderProducts(products);
+}
+
+// Start the application
+document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>

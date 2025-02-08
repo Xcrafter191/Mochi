@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Create Account - FinTuner</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            padding-right: 40px;
+            background-color: #1c1c1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #ffd700;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Password toggle */
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            z-index: 2;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .password-toggle:hover {
+            opacity: 1;
+        }
+
+        .password-toggle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Password strength */
+        .password-strength {
+            margin-top: 8px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .strength-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .strength-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .strength-dot.active.weak {
+            background-color: #ff4444;
+        }
+
+        .strength-dot.active.fair {
+            background-color: #ffbb33;
+        }
+
+        .strength-dot.active.good {
+            background-color: #00C851;
+        }
+
+        .strength-dot.active.strong {
+            background-color: #007E33;
+        }
+
+        .strength-text {
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .strength-text.weak { color: #ff4444; }
+        .strength-text.fair { color: #ffbb33; }
+        .strength-text.good { color: #00C851; }
+        .strength-text.strong { color: #007E33; }
+
+        /* Error messages */
+        .error-message {
+            color: #ff3b30;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Checkbox styling */
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 20px 0;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .checkbox-container:hover {
+            background-color: #1c1c1e;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+        }
+
+        .checkbox-container label {
+            font-size: 14px;
+            color: #fff;
+            flex: 1;
+        }
+
+        .signup-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    color: black;
+    cursor: not-allowed;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.signup-btn.active {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.signup-btn.loading {
+    animation: loading 1.5s infinite;
+    pointer-events: none;
+}
+
+        .signup-btn:not(:disabled) {
+            opacity: 1;
+        }
+
+        .signup-btn:disabled {
+            cursor: not-allowed;
+            background-color: #ffd700;
+            opacity: 0.4;
+        }
+
+        .signup-btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .signup-btn.loading {
+            animation: loading 1.5s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes loading {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider:before,
+        .divider:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #333;
+        }
+
+        .divider:before { left: 0; }
+        .divider:after { right: 0; }
+
+        .divider span {
+            background-color: #000;
+            padding: 0 15px;
+            color: #666;
+        }
+
+        /* Google button */
+        .google-btn {
+            width: 100%;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Links */
+        a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        a:hover {
+            opacity: 0.8;
+            text-decoration: none;
+            color: #ffd700;
+        }
+
+        /* Back button */
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+            padding: 5px 0;
+            margin-bottom: 20px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .back-btn:hover {
+            opacity: 1;
+        }
+
+        .back-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+        .signup-prompt {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-prompt a {
+            color: #ffd700;
+            text-decoration: none;
+            margin-left: 5px;
+            font-weight: 500;
+        }
+
+        .signup-prompt a:hover {
+            opacity: 0.8;
+        }
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .logo img {
+            max-width: 70%;
+            height: auto;
+        }
+
+        .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal {
+    background-color: #000; /* Black background */
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    position: relative; /* To keep the close button positioned at the bottom */
+}
+
+.modal-header {
+    text-align: center; /* Center header text */
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff; /* White text */
+    border-bottom: 1px solid #444; /* Divider line */
+    flex-shrink: 0; /* Ensure header doesn't shrink */
+}
+
+.modal-content {
+    padding: 1rem;
+    background: none !important;
+    color: #fff; /* White text */
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100%; /* Limit content height */
+    flex-grow: 1; /* Allow content to grow and take remaining space */
+    text-align: left; /* Center align content */
+    font-size: 0.8 rem;
+}
+
+.modal-close {
+    position: absolute; /* Position button at the bottom */
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+    background-color: #ffd700; /* Yellow button */
+    color: #000; /* Black text */
+    text-decoration: none;
+    border: none;
+    border-top: 1px solid #444; /* Top border for visual separation */
+    border-radius: 0 0 8px 8px; /* Match modal corner rounding */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.modal-close:hover {
+    background-color: #ffc107; /* Slightly darker yellow on hover */
+}
+
+
+        /* Responsive styles */
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+            input { font-size: 14px; }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container { max-width: 80%; }
+            .logo img { width: 50%; }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="container">
+        <button class="back-btn" onclick="window.history.back();">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 19.5 L8.25 12l7.5-7.5" />
+            </svg>
+        </button>
+
+        <h1>Create your Account</h1>
+        
+        <form id="signupForm" method="POST" action="" novalidate>
+            <input type="hidden" name="email_signup" value="1">
+            
+            <div class="form-group">
+                <input type="text" 
+                       id="username" 
+                       name="username" 
+                       placeholder="Username*" 
+                       value="<?php echo htmlspecialchars($username ?? ''); ?>"
+                       required>
+                <div class="error-message" id="username-error"></div>
+            </div>
+
+            <div class="form-group">
+                <input type="email" 
+                       id="email" 
+                       name="email" 
+                       placeholder="Email*"
+                       value="<?php echo htmlspecialchars($email ?? ''); ?>"
+                       required>
+                <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="password-wrapper">
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           placeholder="Password*"
+                           required>
+                    <button type="button" 
+                            class="password-toggle" 
+                            onclick="togglePassword('password')" 
+                            aria-label="Toggle password visibility">
+                        <img src="../assets/images/eyes_closed.png" 
+                             alt="Toggle password" 
+                             class="toggle-icon" 
+                             id="password-toggle-icon">
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-dots">
+                        <div class="strength-dot" id="dot-1"></div>
+                        <div class="strength-dot" id="dot-2"></div>
+                        <div class="strength-dot" id="dot-3"></div>
+                        <div class="strength-dot" id="dot-4"></div>
+                    </div>
+                    <span class="strength-text" id="strength-text">Kekuatan Password</span>
+                </div>
+                <div class="error-message" id="password-error"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="password-wrapper">
+                    <input type="password" 
+                           id="confirmPassword" 
+                           name="confirmPassword" 
+                           placeholder="Confirm Password*"
+                           required>
+                    <button type="button" 
+                            class="password-toggle" 
+                            onclick="togglePassword('confirmPassword')" 
+                            aria-label="Toggle password visibility">
+                        <img src="../assets/images/eyes_closed.png" 
+                             alt="Toggle password" 
+                             class="toggle-icon" 
+                             id="confirmPassword-toggle-icon">
+                    </button>
+                </div>
+                <div class="error-message" id="confirmPassword-error"></div>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" 
+                       id="terms" 
+                       name="terms" 
+                       required>
+                <label for="terms">
+                    I have read and agree to the 
+                    <a href="#" class="open-modal" data-modal-id="modal1">Privacy Policy</a> and 
+                    <a href="#" class="open-modal" data-modal-id="modal2">Terms of Service</a>
+                </label>
+            </div>
+
+            <button type="submit" 
+                    class="signup-btn" 
+                    id="signupButton" 
+                    disabled>
+                Sign up with Email
+            </button>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <div class="google-btn">
+                <div id="g_id_onload"
+                     data-client_id="818310217727-9vrs19lkieen2eep9ntnb1c0eaffmgok.apps.googleusercontent.com"
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="outline"
+                     data-text="continue_with"
+                     data-size="large"
+                     data-width="300"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+<p class="signup-prompt">
+    Already have an account? <a href="login.php">Login</a>
+</p>
+            <div class="logo">
+                <img src="../assets/images/Fintunerlogo.png" alt="FinTuner logo">
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-backdrop" id="modal1">
+    <div class="modal">
+        <div class="modal-header">Privacy Policy</div>
+        <div class="modal-content">
+            <h2 class="mb-6">Kebijakan Privasi</h2>
+
+            <ol class="space-y-6">
+                <li>
+                    <b><strong class="block mb-2">Pendahuluan</strong></b>
+                    <p class="mb-4">
+                        Kebijakan Privasi ini menjelaskan bagaimana FinTuner mengumpulkan, menggunakan, menyimpan, dan melindungi Data Pribadi Anda. Kami berkomitmen untuk melindungi privasi Anda dan mematuhi <strong>UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi (UU PDP)</strong>, <strong>UU No. 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik (UU ITE)</strong>, serta peraturan terkait lainnya.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Data yang Kami Kumpulkan</strong>
+                    <div class="mb-4">
+                        <p class="mb-2"><strong>a. Informasi Pribadi</strong>:</p>
+                        <ul class="ml-4 mb-4 space-y-1">
+                            <li>Nama lengkap</li>
+                            <li>Tanggal lahir</li>
+                            <li>Pekerjaan</li>
+                            <li>Alamat email</li>
+                            <li>Nomor telepon</li>
+                        </ul>
+
+                        <p class="mb-2"><strong>b. Data Finansial</strong>:</p>
+                        <ul class="ml-4 mb-4 space-y-1">
+                            <li>Pendapatan</li>
+                            <li>Pengeluaran</li>
+                            <li>Aset dan hutang</li>
+                            <li>Profil risiko</li>
+                        </ul>
+
+                        <p class="mb-2"><strong>c. Data Teknis</strong>:</p>
+                        <ul class="ml-4 space-y-1">
+                            <li>Alamat IP</li>
+                            <li>Data perangkat (jenis perangkat, sistem operasi)</li>
+                            <li>Cookie dan teknologi pelacakan serupa</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Tujuan Pengumpulan dan Penggunaan Data</strong>
+                    <p class="mb-2">Kami mengumpulkan dan menggunakan Data Pribadi Anda untuk tujuan berikut:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li><strong>Penyediaan Layanan</strong>: Memberikan rekomendasi finansial yang relevan dan personalisasi layanan.</li>
+                        <li><strong>Peningkatan Layanan</strong>: Menganalisis penggunaan Layanan untuk meningkatkan fitur dan fungsionalitas.</li>
+                        <li><strong>Komunikasi</strong>: Mengirimkan pemberitahuan, pembaruan, dan informasi terkait akun atau Layanan.</li>
+                        <li><strong>Kepatuhan Hukum</strong>: Memenuhi kewajiban hukum dan peraturan yang berlaku.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Dasar Hukum Pemrosesan Data</strong>
+                    <p class="mb-2">Kami memproses Data Pribadi Anda berdasarkan:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li><strong>Persetujuan</strong>: Dengan menggunakan Layanan, Anda memberikan persetujuan untuk pemrosesan Data Pribadi Anda.</li>
+                        <li><strong>Pelaksanaan Kontrak</strong>: Pemrosesan diperlukan untuk pelaksanaan perjanjian antara Anda dan FinTuner.</li>
+                        <li><strong>Kepentingan yang Sah</strong>: Untuk tujuan peningkatan Layanan dan keamanan.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Hak Pengguna</strong>
+                    <p class="mb-2">Anda memiliki hak sebagai berikut:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li><strong>Akses Data</strong>: Meminta salinan Data Pribadi yang kami simpan tentang Anda.</li>
+                        <li><strong>Perbaikan Data</strong>: Meminta koreksi atas Data Pribadi yang tidak akurat atau tidak lengkap.</li>
+                        <li><strong>Penghapusan Data</strong>: Meminta penghapusan Data Pribadi.</li>
+                        <li><strong>Pembatasan Pemrosesan</strong>: Meminta pembatasan pemrosesan Data Pribadi Anda.</li>
+                        <li><strong>Penarikan Persetujuan</strong>: Menarik persetujuan Anda kapan saja.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Penyimpanan dan Keamanan Data</strong>
+                    <p class="mb-4">
+                        Data Pribadi Anda disimpan di server aman di Indonesia. Kami menggunakan teknologi enkripsi, firewall, dan langkah-langkah keamanan lainnya untuk melindungi Data Pribadi Anda dari akses, penggunaan, atau pengungkapan yang tidak sah.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Retensi Data</strong>
+                    <p class="mb-4">
+                        Kami akan menyimpan Data Pribadi Anda selama akun Anda aktif atau selama diperlukan untuk menyediakan Layanan. Setelah akun dinonaktifkan, Data Pribadi Anda akan dihapus atau dianonimkan dalam waktu 6 bulan, kecuali jika diperlukan oleh hukum untuk menyimpannya lebih lama.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Pengungkapan kepada Pihak Ketiga</strong>
+                    <p class="mb-2">Kami tidak akan menjual atau menyewakan Data Pribadi Anda kepada pihak ketiga. Kami dapat membagikan Data Pribadi Anda dengan:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li>- <strong>Penyedia Layanan</strong>: Pihak ketiga yang membantu kami dalam menyediakan Layanan.</li>
+                        <li>- <strong>Kepatuhan Hukum</strong>: Jika diwajibkan oleh hukum atau proses hukum lainnya.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Transfer Internasional Data</strong>
+                    <p class="mb-4">
+                        Jika diperlukan, Data Pribadi Anda dapat ditransfer dan diproses di negara lain yang mungkin memiliki hukum perlindungan data yang berbeda. Kami akan memastikan bahwa perlindungan yang sesuai diterapkan sesuai dengan peraturan yang berlaku.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Cookie dan Teknologi Pelacakan</strong>
+                    <p class="mb-4">
+                        Kami menggunakan cookie dan teknologi pelacakan serupa untuk meningkatkan pengalaman Pengguna. Anda dapat mengatur browser Anda untuk menolak cookie, namun hal ini dapat mempengaruhi fungsi Layanan.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Keamanan Data</strong>
+                    <p class="mb-4">
+                        Kami berkomitmen untuk menjaga keamanan Data Pribadi Anda. Namun, tidak ada metode transmisi melalui internet atau metode penyimpanan elektronik yang 100% aman. Oleh karena itu, kami tidak dapat menjamin keamanan absolut.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Data Anak-anak</strong>
+                    <p class="mb-4">
+                        Layanan kami tidak ditujukan untuk individu di bawah usia 18 tahun. Kami tidak secara sengaja mengumpulkan Data Pribadi dari anak-anak di bawah usia tersebut. Jika kami mengetahui bahwa kami telah mengumpulkan Data Pribadi dari anak-anak tanpa verifikasi izin orang tua, kami akan mengambil langkah untuk menghapus informasi tersebut.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Perubahan Kebijakan Privasi</strong>
+                    <p class="mb-4">
+                        Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Perubahan akan diberitahukan melalui email atau pemberitahuan dalam Aplikasi. Kami menganjurkan Anda untuk meninjau Kebijakan Privasi ini secara berkala.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Kontak</strong>
+                    <p class="mb-2">Jika Anda memiliki pertanyaan atau permintaan terkait Kebijakan Privasi ini, silakan hubungi kami di:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li>Email: <strong>privacy@fintuner.co.id</strong></li>
+                        <li>Alamat Kantor: <strong>Jl. Mawar No. 123, Jakarta, Indonesia</strong></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Penyelesaian Sengketa</strong>
+                    <p class="mb-4">
+                        Jika Anda merasa bahwa hak-hak Anda terkait Data Pribadi telah dilanggar, Anda dapat menghubungi kami melalui detail kontak di atas. Kami akan berusaha untuk menyelesaikan keluhan Anda secepat mungkin.
+                    </p>
+                </li>
+            </ol>
+        </div>
+        <button class="modal-close">Close</button>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="modal2">
+    <div class="modal">
+        <div class="modal-header">EULA</div>
+        <div class="modal-content">
+            <h2 class="mb-6">Ketentuan Layanan (TOS)</h2>
+
+            <ol class="space-y-6">
+                <li>
+                    <strong class="block mb-2">Pendahuluan</strong>
+                    <p class="mb-4">
+                        Selamat datang di <strong>FinTuner</strong>! Layanan ini disediakan oleh <strong>PT. Busur Setengah Lingkaran (BSL) Omega</strong>. Dengan mengakses atau menggunakan layanan kami, Anda menyetujui untuk terikat oleh Ketentuan Layanan ini, serta semua hukum dan peraturan yang berlaku di Indonesia, termasuk tetapi tidak terbatas pada <strong>UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi (UU PDP)</strong> dan <strong>UU No. 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik (UU ITE)</strong>.
+                    </p>
+                    <p class="mb-4">
+                        Jika Anda tidak menyetujui ketentuan ini, mohon untuk tidak menggunakan layanan kami.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Definisi</strong>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li><strong>"Aplikasi"</strong>: Platform digital FinTuner, termasuk aplikasi web, seluler, dan fitur terkait.</li>
+                        <li><strong>"Layanan"</strong>: Semua fitur dan fungsionalitas yang ditawarkan oleh Aplikasi FinTuner.</li>
+                        <li><strong>"Pengguna"</strong>: Individu yang menggunakan Aplikasi.</li>
+                        <li><strong>"Data Pribadi"</strong>: Informasi yang mengidentifikasi Pengguna secara langsung atau tidak langsung.</li>
+                        <li><strong>"Pihak Ketiga"</strong>: Entitas eksternal yang bekerja sama dengan FinTuner.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Ruang Lingkup Layanan</strong>
+                    <p class="mb-2">FinTuner menyediakan:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li>Rekomendasi finansial berdasarkan data Pengguna</li>
+                        <li>Simulasi dan analisis kondisi finansial</li>
+                        <li>Edukasi keuangan untuk meningkatkan literasi Pengguna</li>
+                        <li>Penilaian profil risiko untuk menyesuaikan strategi investasi</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong class="block mb-2">Pendaftaran Akun</strong>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li><strong>Berusia minimal 18 tahun</strong> atau <strong>memiliki izin dari orang tua atau wali hukum</strong></li>
+                        <li>Membuat akun dengan alamat email yang valid atau melalui otentikasi Pihak Ketiga seperti Google</li>
+                        <li>Memberikan data yang benar, lengkap, dan terkini</li>
+                        <li>Menjaga kerahasiaan informasi akun, termasuk kata sandi</li>
+                    </ul>
+                    <p class="mb-4">Pengguna bertanggung jawab penuh atas semua aktivitas yang terjadi melalui akun mereka.</p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Hak Kekayaan Intelektual</strong>
+                    <p class="mb-4">
+                        Seluruh konten dalam Layanan, termasuk tetapi tidak terbatas pada teks, grafik, logo, ikon, gambar, dan perangkat lunak, adalah milik FinTuner atau pemberi lisensinya dan dilindungi oleh hukum hak cipta dan kekayaan intelektual lainnya. Pengguna tidak diperkenankan untuk mereproduksi, mendistribusikan, atau menggunakan konten tersebut tanpa izin tertulis dari FinTuner.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Hak dan Kewajiban Pengguna</strong>
+                    <div class="mb-4">
+                        <p class="mb-2"><strong>Hak Pengguna</strong>:</p>
+                        <ul class="ml-4 mb-4 space-y-2">
+                            <li>Mengakses dan menggunakan Layanan sesuai dengan Ketentuan Layanan ini</li>
+                            <li>Meminta penghapusan akun dan Data Pribadi sesuai Kebijakan Privasi</li>
+                            <li>Mendapatkan informasi terkait pembaruan atau perubahan Ketentuan Layanan</li>
+                        </ul>
+
+                        <p class="mb-2"><strong>Kewajiban Pengguna</strong>:</p>
+                        <ul class="ml-4 mb-4 space-y-2">
+                            <li>Memberikan data yang akurat dan tidak menyesatkan</li>
+                            <li>Tidak menggunakan Layanan untuk aktivitas ilegal</li>
+                            <li>Tidak mengganggu sistem atau meretas Layanan</li>
+                            <li>Mematuhi semua hukum dan peraturan yang berlaku</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Pembatasan Tanggung Jawab</strong>
+                    <p class="mb-2">FinTuner tidak bertanggung jawab atas:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li>Kerugian yang timbul akibat keputusan finansial yang dibuat berdasarkan rekomendasi</li>
+                        <li>Gangguan Layanan akibat faktor di luar kendali kami</li>
+                        <li>Kerugian akibat akses atau penggunaan akun oleh pihak yang tidak berwenang</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Penggunaan Pihak Ketiga</strong>
+                    <p class="mb-4">
+                        Layanan kami dapat mengandung tautan atau integrasi dengan layanan Pihak Ketiga. FinTuner tidak bertanggung jawab atas konten, kebijakan privasi, atau praktik dari situs atau layanan Pihak Ketiga tersebut. Pengguna disarankan untuk membaca ketentuan layanan dan kebijakan privasi dari Pihak Ketiga tersebut.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Perubahan pada Ketentuan Layanan</strong>
+                    <p class="mb-4">
+                        FinTuner berhak untuk mengubah atau memperbarui Ketentuan Layanan ini sewaktu-waktu. Perubahan akan diberitahukan melalui email atau pemberitahuan dalam Aplikasi. Penggunaan Layanan secara terus-menerus setelah perubahan dianggap sebagai persetujuan terhadap perubahan tersebut.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Pengakhiran</strong>
+                    <p class="mb-4">
+                        FinTuner berhak untuk menangguhkan atau mengakhiri akses Pengguna ke Layanan jika Pengguna melanggar Ketentuan Layanan ini atau hukum yang berlaku. Pengguna juga dapat mengakhiri penggunaan Layanan dengan menonaktifkan akun mereka.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Penyelesaian Sengketa</strong>
+                    <p class="mb-4">
+                        Setiap sengketa yang timbul dari atau sehubungan dengan Ketentuan Layanan ini akan diselesaikan terlebih dahulu melalui musyawarah untuk mufakat. Jika tidak tercapai kesepakatan, sengketa akan diselesaikan melalui arbitrase sesuai dengan peraturan arbitrase Indonesia, atau melalui pengadilan yang berwenang di Indonesia.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Hukum yang Berlaku</strong>
+                    <p class="mb-4">
+                        Ketentuan Layanan ini diatur dan ditafsirkan sesuai dengan hukum Republik Indonesia.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="block mb-2">Kontak</strong>
+                    <p class="mb-2">Jika Anda memiliki pertanyaan terkait Ketentuan Layanan ini, silakan hubungi kami di:</p>
+                    <ul class="ml-4 mb-4 space-y-2">
+                        <li>Email: <strong>management.jflyc@gmail.com</strong></li>
+                        <li>Alamat Kantor: <strong>Taman Kopo Indah 3 Blok F-1, Mekarrahayu, Margaasih, Kab. Bandung, Jawa Barat, Indonesia.</strong></li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        <button class="modal-close">Close</button>
+</div>
+    
+    <script>
+        const form = document.getElementById('signupForm');
+        const signupButton = document.getElementById('signupButton');
+        const requiredFields = ['username', 'email', 'password', 'confirmPassword'];
+        
+        // Track form state
+        let formSubmitted = false;
+        const validationState = {
+            username: { touched: false, valid: false },
+            email: { touched: false, valid: false },
+            password: { touched: false, valid: false },
+            confirmPassword: { touched: false, valid: false }
+        };
+
+        // Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        // Password toggle
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById(`${fieldId}-toggle-icon`);
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.src = '../assets/images/eyes_open.png';
+            } else {
+                field.type = 'password';
+                icon.src = '../assets/images/eyes_closed.png';
+            }
+        }
+
+        // Check availability functions
+        function checkUsernameAvailability(username) {
+    const formData = new FormData();
+    formData.append('type', 'username');
+    formData.append('value', username);
+
+    fetch('../includes/check_availability.php', {  // Remove the leading ../
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (validationState.username.touched) {
+            const error = document.getElementById('username-error');
+            if (!data.available) {
+                showError(error, 'Username already taken');
+                validationState.username.valid = false;
+            }
+            updateSubmitButton();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function checkEmailAvailability(email) {
+    const formData = new FormData();
+    formData.append('type', 'email');
+    formData.append('value', email);
+
+    fetch('../includes/check_availability.php', {  // Remove the leading ../
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (validationState.email.touched) {
+            const error = document.getElementById('email-error');
+            if (!data.available) {
+                showError(error, 'Email already registered');
+                validationState.email.valid = false;
+            }
+            updateSubmitButton();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let score = 0;
+            const dots = [
+                document.getElementById('dot-1'),
+                document.getElementById('dot-2'),
+                document.getElementById('dot-3'),
+                document.getElementById('dot-4')
+            ];
+            const strengthText = document.getElementById('strength-text');
+            
+            // Reset all dots
+            dots.forEach(dot => {
+                dot.classList.remove('weak', 'fair', 'good', 'strong');
+                dot.classList.remove('active');
+            });
+
+            if (password.length >= 8) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[!@#$%^&*]/.test(password)) score++;
+
+            let strengthClass, strengthMessage;
+            switch(score) {
+                case 0:
+                    strengthClass = 'weak';
+                    strengthMessage = 'Sangat Lemah';
+                    break;
+                case 1:
+                    strengthClass = 'weak';
+                    strengthMessage = 'Lemah';
+                    break;
+                case 2:
+                    strengthClass = 'fair';
+                    strengthMessage = 'Cukup';
+                    break;
+                case 3:
+                    strengthClass = 'good';
+                    strengthMessage = 'Kuat';
+                    break;
+                case 4:
+                    strengthClass = 'strong';
+                    strengthMessage = 'Sangat Kuat';
+                    break;
+            }
+
+            // Update dots
+            for (let i = 0; i < score; i++) {
+                dots[i].classList.add('active', strengthClass);
+            }
+
+            strengthText.textContent = strengthMessage;
+            strengthText.className = 'strength-text ' + strengthClass;
+        }
+
+        // Validation functions
+        const validateUsername = debounce((username) => {
+            const error = document.getElementById('username-error');
+            
+            if (username.length < 3) {
+                showError(error, 'Username must be at least 3 characters');
+                validationState.username.valid = false;
+            } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                showError(error, 'Username can only contain letters, numbers, and underscores');
+                validationState.username.valid = false;
+            } else {
+                hideError(error);
+                validationState.username.valid = true;
+                // Only check availability if basic validation passes
+                checkUsernameAvailability(username);
+            }
+            updateSubmitButton();
+        }, 500);
+
+        const validateEmail = debounce((email) => {
+            const error = document.getElementById('email-error');
+            
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError(error, 'Please enter a valid email address');
+                validationState.email.valid = false;
+            } else {
+                hideError(error);
+                validationState.email.valid = true;
+                // Only check availability if email format is valid
+                checkEmailAvailability(email);
+            }
+            updateSubmitButton();
+        }, 500);
+
+        const validatePassword = debounce((password) => {
+            const error = document.getElementById('password-error');
+            
+            if (password.length < 8) {
+                showError(error, 'Password must be at least 8 characters');
+                validationState.password.valid = false;
+            } else if (!/[A-Z]/.test(password)) {
+                showError(error, 'Password must contain at least one uppercase letter');
+                validationState.password.valid = false;
+            } else if (!/[a-z]/.test(password)) {
+                showError(error, 'Password must contain at least one lowercase letter');
+                validationState.password.valid = false;
+            } else if (!/[0-9]/.test(password)) {
+                showError(error, 'Password must contain at least one number');
+                validationState.password.valid = false;
+            } else {
+                hideError(error);
+                validationState.password.valid = true;
+            }
+            
+            checkPasswordStrength(password);
+            
+            // Validate confirm password if it's been touched
+            if (validationState.confirmPassword.touched) {
+                validateConfirmPassword();
+            }
+            
+            updateSubmitButton();
+        }, 500);
+
+        const validateConfirmPassword = debounce(() => {
+            if (!validationState.confirmPassword.touched) return;
+            
+            const error = document.getElementById('confirmPassword-error');
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showError(error, 'Passwords do not match');
+                validationState.confirmPassword.valid = false;
+            } else {
+                hideError(error);
+                validationState.confirmPassword.valid = true;
+            }
+            
+            updateSubmitButton();
+        }, 500);
+
+        function showError(element, message) {
+            element.textContent = message;
+            element.classList.add('visible');
+        }
+
+        function hideError(element) {
+            element.classList.remove('visible');
+        }
+
+        // Update submit button state
+        function updateSubmitButton() {
+            const allValid = Object.values(validationState)
+                .every(field => !field.touched || field.valid);
+            const terms = document.getElementById('terms').checked;
+            
+            signupButton.disabled = !(allValid && terms);
+            
+            if (allValid && terms) {
+                signupButton.classList.add('active');
+            } else {
+                signupButton.classList.remove('active');
+            }
+        }
+
+        // Event listeners
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            
+            field.addEventListener('input', () => {
+                if (validationState[fieldId].touched) {
+                    switch(fieldId) {
+                        case 'username':
+                            validateUsername(field.value);
+                            break;
+                        case 'email':
+                            validateEmail(field.value);
+                            break;
+                        case 'password':
+                            validatePassword(field.value);
+                            break;
+                        case 'confirmPassword':
+                            validateConfirmPassword();
+                            break;
+                    }
+                }
+            });
+
+            field.addEventListener('blur', () => {
+                validationState[fieldId].touched = true;
+                switch(fieldId) {
+                    case 'username':
+                        validateUsername(field.value);
+                        break;
+                    case 'email':
+                        validateEmail(field.value);
+                        break;
+                    case 'password':
+                        validatePassword(field.value);
+                        break;
+                    case 'confirmPassword':
+                        validateConfirmPassword();
+                        break;
+                }
+            });
+
+            field.addEventListener('focus', () => {
+                hideError(document.getElementById(`${fieldId}-error`));
+            });
+        });
+
+        document.getElementById('terms').addEventListener('change', updateSubmitButton);
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            formSubmitted = true;
+
+            // Mark all fields as touched and validate
+            requiredFields.forEach(fieldId => {
+                validationState[fieldId].touched = true;
+                const field = document.getElementById(fieldId);
+                switch(fieldId) {
+                    case 'username':
+                        validateUsername(field.value);
+                        break;
+                    case 'email':
+                        validateEmail(field.value);
+                        break;
+                    case 'password':
+                        validatePassword(field.value);
+                        break;
+                    case 'confirmPassword':
+                        validateConfirmPassword();
+                        break;
+                }
+            });
+
+            // Final check before submit
+            const isValid = Object.values(validationState)
+                .every(field => field.valid);
+
+            if (isValid && document.getElementById('terms').checked) {
+                signupButton.disabled = true;
+                signupButton.classList.add('loading');
+                signupButton.textContent = 'Creating account...';
+                
+                setTimeout(() => {
+                    this.submit();
+                }, 100);
+            }
+        });
+
+        // Google Sign In callback
+    // Replace the handleCredentialResponse function with this updated version
+function handleCredentialResponse(response) {
+    const termsCheckbox = document.getElementById('terms');
+    
+    if (!termsCheckbox.checked) {
+        // Show warning message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message visible';
+        errorDiv.style.textAlign = 'center';
+        errorDiv.style.marginBottom = '15px';
+        errorDiv.textContent = 'Silahkan baca dan setujui aturan penggunaan dan kebijakan privasi sebelum melanjutkan. ';
+        
+        const googleBtn = document.querySelector('.google-btn');
+        
+        // Remove existing error message if any
+        const existingError = googleBtn.previousElementSibling;
+        if (existingError && existingError.classList.contains('error-message')) {
+            existingError.remove();
+        }
+        
+        // Insert error message before Google button
+        googleBtn.parentNode.insertBefore(errorDiv, googleBtn);
+        
+        // Scroll error into view
+        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Remove error message after 5 seconds
+        setTimeout(() => {
+            errorDiv.style.opacity = '0';
+            setTimeout(() => errorDiv.remove(), 300);
+        }, 5000);
+        
+        return;
+    }
+
+    // Continue with the original Google sign-in flow
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.style.display = 'none';
+    
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'credential';
+    input.value = response.credential;
+    
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+}
+
+// Add error handling for Google Sign In initialization
+function handleGoogleInitError() {
+    console.error('Google Sign In failed to initialize');
+    const googleBtn = document.querySelector('.google-btn');
+    if (googleBtn) {
+        googleBtn.style.display = 'none';
+        const errorMsg = document.createElement('p');
+        errorMsg.className = 'error-message visible';
+        errorMsg.textContent = 'Google Sign In is temporarily unavailable. Please use email signup.';
+        googleBtn.parentNode.insertBefore(errorMsg, googleBtn);
+    }
+}
+
+function initModal() {
+    const modalLinks = document.querySelectorAll('.open-modal');
+    modalLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            const modalId = this.getAttribute('data-modal-id');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex'; // Show modal
+            }
+        });
+    });
+
+    const modals = document.querySelectorAll('.modal-backdrop');
+    modals.forEach(modal => {
+        // Close modal when clicking outside it
+        modal.addEventListener('click', function (event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+            }
+        });
+
+        // Close modal using the close button
+        const closeButton = modal.querySelector('.modal-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initModal);
+    </script>
+</body>
+</html>

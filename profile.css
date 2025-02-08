@@ -1,0 +1,238 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: "DynaPuff", serif;
+    line-height: 1.6;
+    text-align: center;
+    background-image: url(images/profile_background.png);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #794874;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 800px;
+    padding: 2rem;
+    background-image: url(images/profile_container_background.png);
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 10vh;
+    animation: slideIN 1s ease-in-out forwards;
+}
+
+@keyframes slideIN{
+    from{
+      opacity: 0;
+      transform: translateY(-200px);
+    }
+    to{
+      opacity: 1;
+    }
+  }
+  
+
+/* Profile Header */
+.profile-header {
+    margin-bottom: 2rem;
+}
+
+.profile-header h2{
+    color: #94598eaf;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #794874;
+    margin-bottom: 1rem;
+}
+
+.profile-name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Profile Content */
+.profile-content {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.profile-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.bio p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-info li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #a774a1;
+}
+
+.social-media {
+    margin-top: 2rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-link img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.social-link img:hover {
+    transform: scale(1.2);
+}
+
+/* Profile Footer */
+.profile-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #794874;
+}
+
+.button-74 {
+    font-family: "DynaPuff", serif;
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    color: #794874;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-74:hover {
+    color: #5e385a;
+    background-color: #d1c7bd;
+  }
+  
+  .button-74:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+  }
+  
+  @media (min-width: 768px) {
+    .button-74 {
+      min-width: 120px;
+      padding: 0 25px;
+    }
+  }
+
+  /* Navbar Styles */
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    width: 130px;
+    height: auto;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-links a {
+    color: #794874;
+    text-decoration: none;
+    font-family: "DynaPuff", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+    color: #ffcccc;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #794874;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-actions button:hover {
+    color: #ffcccc;
+}
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+    }
+    
+    .navbar-content {
+        justify-content: space-between;
+    }
+}
