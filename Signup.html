@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yochi - Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Chewy&family=DynaPuff:wdth,wght@87.5,400..700&family=Gabarito:wght@400..900&family=Jacquard+12&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Margarine&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        /* General Styles */
+        body {
+            color: #794874;
+            font-family: "Gabarito", serif;
+            font-style: normal;
+            font-weight: bold;
+            background: 
+                url('images/index_background1.png') no-repeat top center,
+                url('images/index_background2.png') no-repeat bottom center;
+            background-color: #fffdf0;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            margin-top: 2vh;
+            padding: 10px 0;
+        }
+
+        .navbar-brand img {
+            width: 130px;
+            padding: 5px;
+        }
+
+        .g-signin-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4285F4;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+        /* Header Styles */
+        .header-container {
+            padding: 1.5vh;
+            margin-right: 27vw;
+            margin-top: 10vh;
+        }
+
+        .hero-section {
+            padding-top: 50px;
+            padding-bottom: 100px;
+        }
+
+        .hero-section h1 {
+            font-family: "DynaPuff", serif;
+            font-weight: 900;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Form Styles */
+        .auth-form {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form h2 {
+            font-family: "DynaPuff", serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auth-form input[type="text"],
+        .auth-form input[type="email"],
+        .auth-form input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .validation-message {
+            color: #ff4444;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .password-strength-text {
+            font-size: 0.8em;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .checkbox-container {
+            margin: 15px 0;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .button-primary {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            background-color: #ffcccc;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .login-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .login-link a {
+            color: #794874;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Password Strength Indicator */
+        .password-strength {
+            height: 5px;
+            margin-top: 5px;
+            border-radius: 2px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .weak { background-color: #ff4444; width: 33.33%; }
+        .medium { background-color: #ffa700; width: 66.66%; }
+        .strong { background-color: #00c851; width: 100%; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .header-container {
+                margin-left: 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a class="navbar-brand" href="/">
+                <img src="images/logo.png" alt="Yochi Logo">
+            </a>
+        </nav>
+
+        <header class="hero-section">
+            <div class="header-container">
+                <h1>Creamy Yoghurt</h1>
+                    <h1>Wrapped in Soft Mochi Bliss</h1>
+                <form class="auth-form" id="signupForm">
+                    <h2>Join the Yochi Family!</h2>
+                    
+                    <div class="input-container">
+                        <input type="text" id="name" placeholder="Name" required>
+                        <div id="nameError" class="validation-message"></div>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder="Email" required>
+                        <div id="emailError" class="validation-message"></div>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="button" class="password-toggle" id="passwordToggle">
+                            👁️
+                        </button>
+                        <div id="passwordStrength" class="password-strength"></div>
+                        <div id="passwordStrengthText" class="password-strength-text"></div>
+                        <div id="passwordError" class="validation-message"></div>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                        <button type="button" class="password-toggle" id="confirmPasswordToggle">
+                            👁️
+                        </button>
+                        <div id="confirmPasswordError" class="validation-message"></div>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            I have read and agree to the 
+                            <a href="#" id="privacyLink">Privacy Policy</a> and 
+                            <a href="#" id="termsLink">Terms of Service</a>
+                        </label>
+                        <div id="termsError" class="validation-message"></div>
+                    </div>
+
+                    <button type="submit" class="button-primary" id="sign-up">Sign Up</button>
+
+                        <!-- Google Sign-In Button -->
+                    <div class="g-signin-button" id="google-signin-button">
+                    Sign Up with Google
+                        </div>
+
+                    <div class="login-link">
+                        Already have an account? <a href="../yogurt/login.html">Log in</a>
+                    </div>
+                </form>
+            </div>
+        </header>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>Effective Date: Feb, 6 2025</p>
+            <p>At Yochi, we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our App.</p>
+            
+            <p>1. Information We Collect</p>
+          <p>We may collect the following types of information:</p>
+
+          <p>> Personal Information : Name, email address, phone number, shipping address, and payment details.</p>
+          <p>> Usage Data : Information about how you interact with the App, such as pages visited, items viewed, and order history.</p>
+          <p>> Device Information : IP address, browser type, operating system, and device identifiers.</p>
+
+            <p>2. How We Use Your Information</p>
+            <p>We use your information to:
+
+                <p>> Process and fulfill your orders.</p>
+                <p>> Communicate with you about your orders, promotions, and updates.</p>
+                <p>> Improve the App’s functionality and user experience.</p>
+                <p>> Comply with legal obligations.</p>
+
+            <p>3. Sharing Your Information</p>
+            <p>We do not sell your personal information to third parties. However, we may share it with:</p>
+
+            <p>> Service Providers : Third-party vendors who assist with payment processing, delivery, and customer support.</p>
+            <p>> Legal Authorities : When required by law or to protect our rights.</p>
+
+            <p>4. Data Security</p>
+            <p>We implement reasonable security measures to protect your information from unauthorized access, alteration, or disclosure. However, no method of transmission over the internet is 100% secure.</p>
+
+            <p>5. Cookies & Tracking Technologies</p>
+            <p>The App uses cookies and similar technologies to enhance your experience. You can manage cookie preferences through your browser settings.</p>
+
+            <p>6. Your Rights</p>
+            <p>Depending on your location, you may have the right to:</p>
+
+            <p>> Access, correct, or delete your personal information.</p>
+            <p>> Opt out of marketing communications.</p>
+            <p>> To exercise these rights, please contact us at [insert contact email].</p>
+
+            <p>7. Children’s Privacy</p>
+            <p>The App is not intended for users under the age of 18. We do not knowingly collect personal information from children.</p>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Terms of Service</h2>
+            <p>Welcome to Yochi!</p>
+
+                <p>By accessing or using the Yochi app, you agree to comply with and be bound by the following Terms of Service. If you do not agree with these terms, please do not use the App.</p>
+                
+                <p>1. Use of the App</p>
+              <p>The Yochi app is intended for ordering yogurt mochi products and related services.
+                    You must be at least 18 years old to use this App or have parental consent.
+                    You agree to provide accurate and complete information when creating an account or placing an order.</p>
+
+                <p>2. Ordering & Payment</p>
+                <p>All orders placed through the App are subject to availability.
+                Prices listed on the App are in IDR and include applicable taxes unless otherwise stated.
+                Payment must be made via the payment methods accepted by the App (e.g., credit/debit cards, digital wallets).
+                You agree to pay all charges incurred under your account.</p>
+
+                <p>3. Delivery</p>
+                <p>Delivery times and fees will vary depending on your location.
+                Yochi is not responsible for delays caused by unforeseen circumstances such as weather, traffic, or third-party delivery services.</p>
+
+                <p>4. Returns & Refunds</p>
+                <p>Returns or refunds may be issued at Yochi's discretion and only if the product is defective or delivered incorrectly.
+                To request a refund, contact our customer support team within [insert timeframe, e.g., 24 hours] of receiving your order.</p>
+
+                <p>5. Prohibited Activities</p>
+                <p>You may not use the App for any illegal or unauthorized purpose.
+                Misuse of the App, including spamming, hacking, or attempting to disrupt its functionality, is strictly prohibited.</p>
+
+                <p>6. Limitation of Liability</p>
+                <p>Yochi is not liable for any damages arising from your use of the App, including but not limited to lost profits, data loss, or interruptions in service.
+                Our total liability to you for any claims related to the App shall not exceed the amount you paid for your most recent order.</p>
+
+                <p>7. Changes to TOS</p>
+                <p>Yochi reserves the right to modify these Terms of Service at any time. Changes will take effect immediately upon posting on the App.</p>
+
+                <p>8. Termination</p>
+                <p>We reserve the right to suspend or terminate your access to the App if you violate these Terms of Service.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const signupForm = document.getElementById('signupForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
+            const termsCheckbox = document.getElementById('terms');
+            const privacyLink = document.getElementById('privacyLink');
+            const termsLink = document.getElementById('termsLink');
+            const privacyModal = document.getElementById('privacyModal');
+            const termsModal = document.getElementById('termsModal');
+            const passwordStrength = document.getElementById('passwordStrength');
+            const passwordStrengthText = document.getElementById('passwordStrengthText');
+
+            function togglePasswordVisibility(inputId, toggleId) {
+                const input = document.getElementById(inputId);
+                const toggle = document.getElementById(toggleId);
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    toggle.textContent = '👁️‍🗨️';
+                } else {
+                    input.type = 'password';
+                    toggle.textContent = '👁️';
+                }
+            }
+
+            passwordToggle.addEventListener('click', () => togglePasswordVisibility('password', 'passwordToggle'));
+            confirmPasswordToggle.addEventListener('click', () => togglePasswordVisibility('confirmPassword', 'confirmPasswordToggle'));
+
+            function validateForm() {
+                let isValid = true;
+                
+                // Name validation
+                if (nameInput.value.length < 3) {
+                    document.getElementById('nameError').textContent = 'Name must be at least 3 characters long';
+                    isValid = false;
+                } else {
+                    document.getElementById('nameError').textContent = '';
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                    isValid = false;
+                } else {
+                    document.getElementById('emailError').textContent = '';
+                }
+
+                // Password validation
+                if (passwordInput.value.length < 8) {
+                    document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long';
+                    isValid = false;
+                } else {
+                    document.getElementById('passwordError').textContent = '';
+                }
+
+                // Confirm password validation
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                    isValid = false;
+                } else {
+                    document.getElementById('confirmPasswordError').textContent = '';
+                }
+
+                // Terms validation
+                if (!termsCheckbox.checked) {
+                    document.getElementById('termsError').textContent = 'You must agree to the Terms and Conditions';
+                    isValid = false;
+                } else {
+                    document.getElementById('termsError').textContent = '';
+                }
+
+                return isValid;
+            }
+
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (validateForm()) {
+                    console.log('Form submitted successfully');
+                    // Add your form submission logic here
+                }
+            });
+
+            // Modal functionality
+            function openModal(modal) {
+                modal.style.display = "block";
+            }
+
+            function closeModal(modal) {
+                modal.style.display = "none";
+            }
+
+            privacyLink.onclick = (e) => {
+                e.preventDefault();
+                openModal(privacyModal);
+            };
+
+            termsLink.onclick = (e) => {
+                e.preventDefault();
+                openModal(termsModal);
+            };
+
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.onclick = function() {
+                    closeModal(this.closest('.modal'));
+                }
+            });
+
+            window.onclick = function(event) {
+                if (event.target.classList.contains('modal')) {
+                    closeModal(event.target);
+                }
+            }
+
+               // Initialize the Google Sign-In client
+    function initGoogleSignIn() {
+      google.accounts.id.initialize({
+        client_id: '280861402964-9v51pcuuvqv0l4l6oiihj32s2vus8m78.apps.googleusercontent.com', // Replace with your Client ID
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("google-signin-button"),
+        { theme: "outline", size: "large" } // Customization options
+      );
+    }
+
+// Handle the response from Google Sign-In
+function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+
+    // Decode the JWT token to extract user information
+    const user = parseJwt(response.credential);
+    console.log("User signed in:", user);
+
+    // Save user data to localStorage (optional)
+    saveUserDataToLocalStorage(user);
+
+    // Redirect to dashboard.html
+    window.location.href = "product.html";
+}
+
+// Helper function to decode JWT token
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+        atob(base64)
+            .split('')
+            .map(c => `%${c.charCodeAt(0).toString(16).padStart(2, '0')}`)
+            .join('')
+    );
+    return JSON.parse(jsonPayload);
+}
+
+// Save user data to localStorage (optional)
+function saveUserDataToLocalStorage(userData) {
+    localStorage.setItem("user", JSON.stringify(userData));
+}
+
+    // Enable the Sign Up button when the checkbox is checked
+    document.getElementById("terms").addEventListener("change", function () {
+      document.getElementById("sign-up").disabled = !this.checked;
+    });
+
+    // Initialize Google Sign-In when the page loads
+    window.onload = initGoogleSignIn;
+
+            // Password strength indicator
+            function checkPasswordStrength(password) {
+                let strength = 0;
+                if (password.match(/[a-z]+/)) strength += 1;
+                if (password.match(/[A-Z]+/)) strength += 1;
+                if (password.match(/[0-9]+/)) strength += 1;
+                if (password.match(/[$@#&!]+/)) strength += 1;
+
+                if (password.length < 6) {
+                    return ['', ''];
+                } else if (password.length < 8) {
+                    return ['weak', 'Weak'];
+                } else if (password.length < 10) {
+                    return ['medium', 'Medium'];
+                } else {
+                    return ['strong', 'Strong'];
+                }
+            }
+
+            passwordInput.addEventListener('input', () => {
+                const [strengthClass, strengthText] = checkPasswordStrength(passwordInput.value);
+                passwordStrength.className = 'password-strength ' + strengthClass;
+                passwordStrengthText.textContent = strengthText;
+            });
+        });
+    </script>
+</body>
+</html>
+

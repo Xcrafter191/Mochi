@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yochi - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Chewy&family=DynaPuff:wdth,wght@87.5,400..700&family=Gabarito:wght@400..900&family=Jacquard+12&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Margarine&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="yochi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        /* General Styles */
+        body {
+            color: #794874;
+            font-family: "Gabarito", serif;
+            font-style: normal;
+            font-weight: bold;
+            background: 
+                url('images/index_background1.png') no-repeat top center,
+                url('images/index_background2.png') no-repeat bottom center;
+            background-color: #fffdf0;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            margin-top: 2vh;
+            padding: 10px 0;
+        }
+
+        .navbar-brand img {
+            width: 130px;
+            padding: 5px;
+        }
+
+        /* Header Styles */
+        .header-container {
+            padding: 1.5vh;
+            margin-left: 3vw;
+            margin-top: 10vh;
+        }
+
+        .hero-section {
+            padding-top: 50px;
+            padding-bottom: 100px;
+        }
+
+        .hero-section h1 {
+            font-family: "DynaPuff", serif;
+            font-weight: 900;
+            font-size: 3rem;
+            margin-bottom: 30px;
+        }
+
+        /* Form Styles */
+        .auth-form {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            margin-right: 34vw;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form h2 {
+            font-family: "DynaPuff", serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auth-form input[type="email"],
+        .auth-form input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .validation-message {
+            color: #ff4444;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .button-primary {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            background-color: #ffcccc;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .signup-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .signup-link a {
+            color: #794874;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .header-container {
+                margin-left: 0;
+                text-align: center;
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 70%;
+            max-width: 500px;
+        }
+
+        .g-signin-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4285F4;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a class="navbar-brand" href="/">
+                <img src="images/logo.png" alt="Yochi Logo">
+            </a>
+        </nav>
+
+        <header class="hero-section">
+            <div class="header-container">
+                <h1>Welcome Back to Yochi!</h1>
+                <form id="loginForm" class="auth-form">
+                    <h2>Log In</h2>
+                    
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder="Email" required>
+                        <div id="emailError" class="validation-message"></div>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="button" class="password-toggle" id="passwordToggle">
+                            👁️
+                        </button>
+                        <div id="passwordError" class="validation-message"></div>
+                    </div>
+
+                    <button type="submit" class="button-primary">Log In</button>
+
+                    <div class="signup-link">
+                        Don't have an account? <a href="signup.html">Sign up</a>
+                    </div>
+                                            <!-- Google Sign-In Button -->
+                                            <div class="g-signin-button" id="google-signin-button">
+                                                Sign Up with Google
+                                                    </div>
+                </form>
+            </div>
+        </header>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+
+            function togglePasswordVisibility() {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                passwordToggle.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+            }
+
+            passwordToggle.addEventListener('click', togglePasswordVisibility);
+
+            function isValidEmail(email) {
+                const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                return emailRegex.test(email);
+            }
+
+            emailInput.addEventListener('input', () => {
+                if (!isValidEmail(emailInput.value) && emailInput.value !== '') {
+                    emailError.textContent = 'Please enter a valid email address';
+                } else {
+                    emailError.textContent = '';
+                }
+            });
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+
+                if (passwordInput.value.length < 8) {
+                    passwordError.textContent = 'Password must be at least 8 characters long';
+                    isValid = false;
+                } else {
+                    passwordError.textContent = '';
+                }
+
+                if (!isValidEmail(emailInput.value)) {
+                    emailError.textContent = 'Please enter a valid email address';
+                    isValid = false;
+                } else {
+                    emailError.textContent = '';
+                }
+
+                if (isValid) {
+                    console.log('Form submitted successfully');
+                    // Add your form submission logic here
+                }
+            });
+
+                           // Initialize the Google Sign-In client
+    function initGoogleSignIn() {
+      google.accounts.id.initialize({
+        client_id: '280861402964-9v51pcuuvqv0l4l6oiihj32s2vus8m78.apps.googleusercontent.com', // Replace with your Client ID
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("google-signin-button"),
+        { theme: "outline", size: "large" } // Customization options
+      );
+    }
+
+// Handle the response from Google Sign-In
+function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+
+    // Decode the JWT token to extract user information
+    const user = parseJwt(response.credential);
+    console.log("User signed in:", user);
+
+    // Save user data to localStorage (optional)
+    saveUserDataToLocalStorage(user);
+
+    // Redirect to dashboard.html
+    window.location.href = "product.html";
+}
+
+// Helper function to decode JWT token
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+        atob(base64)
+            .split('')
+            .map(c => `%${c.charCodeAt(0).toString(16).padStart(2, '0')}`)
+            .join('')
+    );
+    return JSON.parse(jsonPayload);
+}
+
+// Save user data to localStorage (optional)
+function saveUserDataToLocalStorage(userData) {
+    localStorage.setItem("user", JSON.stringify(userData));
+}
+
+    // Initialize Google Sign-In when the page loads
+    window.onload = initGoogleSignIn;
+        });
+    </script>
+</body>
+</html>

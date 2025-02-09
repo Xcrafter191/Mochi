@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page - YOCHI!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Chewy&family=DynaPuff:wdth,wght@87.5,400..700&family=Gabarito:wght@400..900&family=Jacquard+12&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Margarine&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <style>
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: "DynaPuff", serif;
+    line-height: 1.6;
+    text-align: center;
+    background-image: url(images/profile_background.png);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #794874;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 800px;
+    padding: 2rem;
+    background-image: url(images/profile_container_background.png);
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 10vh;
+    animation: slideIN 1s ease-in-out forwards;
+}
+
+        .profile-container {
+            max-width: 800px;
+            margin: 1rem auto; /* Updated margin */
+            margin-top: 10rem;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+@keyframes slideIN{
+    from{
+      opacity: 0;
+      transform: translateY(-200px);
+    }
+    to{
+      opacity: 1;
+    }
+  }
+  
+
+        /* Profile Header */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-picture {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+.profile-header h2{
+    color: #94598eaf;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #794874;
+    margin-bottom: 1rem;
+}
+
+.profile-name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Profile Content */
+.profile-content {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.profile-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.bio p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-info li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #a774a1;
+}
+
+.social-media {
+    margin-top: 2rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-link img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.social-link img:hover {
+    transform: scale(1.2);
+}
+
+/* Profile Footer */
+.profile-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #794874;
+}
+
+.button-74 {
+    font-family: "DynaPuff", serif;
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    color: #794874;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-74:hover {
+    color: #5e385a;
+    background-color: #d1c7bd;
+  }
+  
+  .button-74:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+  }
+  
+  @media (min-width: 768px) {
+    .button-74 {
+      min-width: 120px;
+      padding: 0 25px;
+    }
+  }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; /* Added position: fixed; top: 0; left: 0; right: 0; z-index: 1000; */
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .navbar-brand img {
+            width: 130px;
+            height: auto;
+        }
+
+        .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-links a {
+    color: #794874;
+    text-decoration: none;
+    font-family: "DynaPuff", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+        .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+        .navbar-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #794874;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-actions button:hover {
+    color: #ffcccc;
+}
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+    }
+    
+    .navbar-content {
+        justify-content: space-between;
+    }
+}
+
+/* Overlay Styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.overlay-content button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.cropper-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    margin: 20px auto;
+    position: relative; /* Ensure proper positioning */
+}
+.cropper-container img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* Prevent layout issues */
+}
+
+.password-toggle {
+    position: relative;
+    display: inline-block;
+}
+
+.password-toggle i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #794874;
+}
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/" class="navbar-brand">
+                <img src="images/logo.png" alt="YOCHI! Logo">
+            </a>
+            <ul class="navbar-links">
+                <li><a href="product.html">Products</a></li>
+                <li><a href="contact.html">About Us</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button id="notificationsBtn" title="Notifications">🔔</button>
+                <a href="layout-checkout.html"><button title="Cart">🛒</button></a>
+                <a href="profile.html"><button title="Profile">👤</button></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <header class="profile-header">
+            <div class="profile-picture">
+                <img id="profileImage" src="images/profile_example.jpeg" alt="Profile Picture">
+                <button id="editProfilePicture" class="button-74">Edit Profile Picture</button>
+            </div>
+            <h1 class="profile-name" contenteditable="true">Andre Kucai</h1>
+            <h2 class="profile-username" contenteditable="true">@andresikucai</h2>
+            <button id="saveProfileChanges" class="button-74">Save Changes</button>
+        </header>
+        <main class="profile-content">
+            <section class="profile-section contact-info">
+                <h2>Contact Information</h2>
+                <ul>
+                    <li><strong>Phone:</strong> +69 08123341441</li>
+                    <li><strong>Location:</strong> Makassar, Indonesia</li>
+                    <li><strong>Email:</strong> andre@example.com</li>
+                </ul>
+            </section>
+            <section class="profile-section account-management">
+                <h2>Account Management</h2>
+                <button class="button-74" onclick="changePassword()">Change Password</button>
+                <button class="button-74" onclick="logout()">Logout</button>
+                <button class="button-74" onclick="deleteAccount()">Delete Account</button>
+            </section>
+        </main>
+        <footer class="profile-footer">
+            <p>&copy; 2025 YOCHI!. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Overlay for Profile Picture Options -->
+    <div id="profilePictureOverlay" class="overlay">
+        <div class="overlay-content">
+            <h3>Edit Profile Picture</h3>
+            <button id="removeProfilePicture">Remove Profile Picture</button>
+            <button id="uploadPicture">Upload Picture from Folder</button>
+            <button id="takePicture">Take Picture from Camera</button>
+            <button id="closeOverlay">Cancel</button>
+        </div>
+    </div>
+
+    <div id="cameraModal" class="modal">
+        <div class="modal-content">
+            <h3>Take a Picture</h3>
+            <video id="cameraPreview" autoplay playsinline style="width: 100%; max-width: 400px;"></video>
+            <button id="captureButton">Capture</button>
+            <button id="cancelCamera">Cancel</button>
+        </div>
+    </div>
+
+    <!-- First Overlay: Current Password -->
+<div id="currentPasswordOverlay" class="overlay">
+    <div class="overlay-content">
+        <h3>Enter Your Current Password</h3>
+        <input type="password" id="currentPasswordInput" placeholder="Current Password">
+        <button id="submitCurrentPassword">Submit</button>
+        <button id="cancelCurrentPassword">Cancel</button>
+    </div>
+</div>
+
+<!-- Second Overlay: New Password -->
+<div id="newPasswordOverlay" class="overlay">
+    <div class="overlay-content">
+        <h3>Set a New Password</h3>
+        <input type="password" id="newPasswordInput" placeholder="New Password">
+        <input type="password" id="confirmPasswordInput" placeholder="Confirm New Password">
+        <button id="submitNewPassword">Save</button>
+        <button id="cancelNewPassword">Cancel</button>
+    </div>
+</div>
+
+    <!-- Modal for Image Cropper -->
+    <div id="cropperModal" class="modal">
+        <div class="modal-content">
+            <h3>Crop Your Image</h3>
+            <div class="cropper-container">
+                <img id="cropperImage" src="" alt="Cropped Image">
+            </div>
+            <button id="saveCroppedImage">Save</button>
+            <button id="cancelCropper">Cancel</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script>
+// DOM Elements
+const profileImage = document.getElementById("profileImage");
+const editProfilePicture = document.getElementById("editProfilePicture");
+const profilePictureOverlay = document.getElementById("profilePictureOverlay");
+const removeProfilePicture = document.getElementById("removeProfilePicture");
+const uploadPicture = document.getElementById("uploadPicture");
+const takePicture = document.getElementById("takePicture");
+const closeOverlay = document.getElementById("closeOverlay");
+const cropperModal = document.getElementById("cropperModal");
+const cropperImage = document.getElementById("cropperImage");
+const saveCroppedImage = document.getElementById("saveCroppedImage");
+const cancelCropper = document.getElementById("cancelCropper");
+const currentPasswordOverlay = document.getElementById("currentPasswordOverlay");
+const newPasswordOverlay = document.getElementById("newPasswordOverlay");
+const currentPasswordInput = document.getElementById("currentPasswordInput");
+const newPasswordInput = document.getElementById("newPasswordInput");
+const confirmPasswordInput = document.getElementById("confirmPasswordInput");
+
+let cameraStream;
+
+let cropperInstance;
+
+// Open Profile Picture Overlay
+editProfilePicture.addEventListener("click", () => {
+    profilePictureOverlay.style.display = "flex";
+});
+
+// Close Profile Picture Overlay
+closeOverlay.addEventListener("click", () => {
+    profilePictureOverlay.style.display = "none";
+});
+
+// Remove Profile Picture
+removeProfilePicture.addEventListener("click", () => {
+    profileImage.src = "images/default-profile.jpg"; // Reset to default image
+
+    // Save the updated profile data to localStorage
+    saveProfileToLocalStorage();
+
+    profilePictureOverlay.style.display = "none";
+});
+
+// Upload Picture from Folder
+uploadPicture.addEventListener("click", () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.onchange = (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            alert("No file selected.");
+            return;
+        }
+
+        // Validate file type
+        if (!file.type.startsWith("image/")) {
+            alert("Please select a valid image file.");
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            const imageDataUrl = e.target.result;
+
+            // Open the cropper modal with the uploaded image
+            openCropperModal(imageDataUrl);
+        };
+
+        reader.onerror = () => {
+            console.error("Error reading file:", reader.error);
+            alert("Failed to read the file. Please try again.");
+        };
+
+        // Read the file as a data URL
+        reader.readAsDataURL(file);
+    };
+
+    input.click();
+});
+
+// Open Camera Modal
+takePicture.addEventListener("click", () => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            cameraStream = stream;
+
+            // Set the video source and wait for it to load
+            cameraPreview.srcObject = stream;
+            cameraPreview.onloadedmetadata = () => {
+                // Play the video only after metadata is loaded
+                cameraPreview.play()
+                    .catch((error) => {
+                        console.error("Error playing video:", error);
+                        alert("Unable to access the camera. Please try again.");
+                    });
+            };
+
+            // Show the camera modal
+            cameraModal.style.display = "flex";
+        })
+        .catch((error) => {
+            console.error("Camera access denied or not available:", error);
+            alert("Camera access denied or not available.");
+        });
+});
+
+// Capture Photo
+captureButton.addEventListener("click", () => {
+    if (!cameraPreview || !cameraPreview.srcObject) {
+        alert("No camera preview available.");
+        return;
+    }
+
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    // Set canvas dimensions to match the video
+    canvas.width = cameraPreview.videoWidth || 640; // Fallback width
+    canvas.height = cameraPreview.videoHeight || 480; // Fallback height
+
+    // Draw the current video frame onto the canvas
+    context.drawImage(cameraPreview, 0, 0, canvas.width, canvas.height);
+
+    // Stop the camera stream
+    cameraStream.getTracks().forEach(track => track.stop());
+
+    // Open the cropper modal with the captured image
+    const imageDataUrl = canvas.toDataURL("image/png");
+    openCropperModal(imageDataUrl); // Pass the image data URL to the cropper
+
+    // Close the camera modal
+    cameraModal.style.display = "none";
+});
+
+// Cancel Camera
+cancelCamera.addEventListener("click", () => {
+    if (cameraStream) {
+        // Stop all tracks in the stream
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null; // Clear the reference
+    }
+
+    // Reset the video source
+    cameraPreview.srcObject = null;
+
+    // Hide the camera modal
+    cameraModal.style.display = "none";
+});
+
+// Open Cropper Modal
+function openCropperModal(imageSrc) {
+    cropperImage.src = imageSrc;
+
+    // Wait for the image to load before initializing the cropper
+    cropperImage.onload = () => {
+        cropperModal.style.display = "flex";
+
+        // Destroy any existing cropper instance to avoid conflicts
+        if (cropperInstance) {
+            cropperInstance.destroy();
+        }
+
+        // Initialize the cropper
+        cropperInstance = new Cropper(cropperImage, {
+            aspectRatio: 1,
+            viewMode: 1,
+        });
+    };
+
+    cropperImage.onerror = () => {
+        console.error("Failed to load image for cropping.");
+        alert("Failed to load the image. Please try again.");
+    };
+}
+
+// Save Cropped Image
+saveCroppedImage.addEventListener("click", () => {
+    if (!cropperInstance) {
+        alert("Cropper is not initialized. Please try again.");
+        return;
+    }
+
+    try {
+        const croppedCanvas = cropperInstance.getCroppedCanvas();
+        if (!croppedCanvas) {
+            alert("Failed to crop the image. Please try again.");
+            return;
+        }
+
+        // Update the profile picture with the cropped image
+        profileImage.src = croppedCanvas.toDataURL("image/png");
+
+        // Save the updated profile data to localStorage
+        saveProfileToLocalStorage();
+
+        // Close the cropper modal
+        cropperModal.style.display = "none";
+
+        // Destroy the cropper instance
+        cropperInstance.destroy();
+        cropperInstance = null;
+    } catch (error) {
+        console.error("Error cropping image:", error);
+        alert("An error occurred while saving the image. Please try again.");
+    }
+});
+
+// Cancel Cropper
+cancelCropper.addEventListener("click", () => {
+    cropperModal.style.display = "none";
+    cropperInstance.destroy();
+});
+
+// Show Current Password Overlay
+function changePassword() {
+    currentPasswordOverlay.style.display = "flex";
+}
+
+// Submit Current Password
+document.getElementById("submitCurrentPassword").addEventListener("click", () => {
+    const currentPassword = currentPasswordInput.value;
+    if (!currentPassword) {
+        alert("Please enter your current password.");
+        return;
+    }
+
+    // Simulate validation (replace with actual validation logic)
+    console.log("Current Password:", currentPassword);
+    currentPasswordOverlay.style.display = "none";
+    newPasswordOverlay.style.display = "flex";
+});
+
+// Cancel Current Password
+document.getElementById("cancelCurrentPassword").addEventListener("click", () => {
+    currentPasswordOverlay.style.display = "none";
+});
+
+// Submit New Password
+document.getElementById("submitNewPassword").addEventListener("click", () => {
+    const newPassword = newPasswordInput.value.trim();
+    const confirmPassword = confirmPasswordInput.value.trim();
+
+    // Validate inputs
+    if (!newPassword || !confirmPassword) {
+        alert("Please fill in both fields.");
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
+        return;
+    }
+
+    // Additional password strength validation (optional)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // At least 8 characters, one letter, one number
+    if (!passwordRegex.test(newPassword)) {
+        alert("Password must be at least 8 characters long and include at least one letter and one number.");
+        return;
+    }
+
+    // Simulate saving the new password (replace with actual save logic)
+    console.log("New Password:", newPassword);
+    newPasswordOverlay.style.display = "none";
+    alert("Password updated successfully!");
+});
+
+// Cancel New Password
+document.getElementById("cancelNewPassword").addEventListener("click", () => {
+    newPasswordOverlay.style.display = "none";
+});
+
+// Toggle Password Visibility
+document.querySelectorAll(".password-toggle i").forEach(icon => {
+    icon.addEventListener("click", () => {
+        const input = icon.previousElementSibling;
+        input.type = input.type === "password" ? "text" : "password";
+    });
+});
+
+// Save Profile Changes
+document.getElementById("saveProfileChanges").addEventListener("click", () => {
+    const newName = document.querySelector(".profile-name").textContent.trim();
+    const newUsername = document.querySelector(".profile-username").textContent.trim();
+
+    if (!newName || !newUsername) {
+        alert("Name and username cannot be empty.");
+        return;
+    }
+
+    // Save the updated profile data to localStorage
+    saveProfileToLocalStorage();
+
+    alert("Profile changes saved successfully!");
+});
+
+// Function to save profile data to localStorage
+function saveProfileToLocalStorage() {
+    const profileData = {
+        profilePicture: profileImage.src,
+        name: document.querySelector(".profile-name").textContent,
+        username: document.querySelector(".profile-username").textContent,
+    };
+
+    // Save the profile data as a JSON string
+    localStorage.setItem("profileData", JSON.stringify(profileData));
+}
+
+// Function to load profile data from localStorage
+function loadProfileFromLocalStorage() {
+    const savedProfileData = localStorage.getItem("profileData");
+
+    if (savedProfileData) {
+        const profileData = JSON.parse(savedProfileData);
+
+        // Update the profile picture, name, and username
+        profileImage.src = profileData.profilePicture;
+        document.querySelector(".profile-name").textContent = profileData.name;
+        document.querySelector(".profile-username").textContent = profileData.username;
+    }
+}
+
+// Log Out
+function logout() {
+    window.location.href = "login.html";
+}
+
+// Delete Account
+function deleteAccount() {
+    if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        window.location.href = "index.html";
+    }
+}
+
+// Initialize Everything
+window.addEventListener("load", () => {
+    loadProfileFromLocalStorage();
+});
+    </script>
+</body>
+</html>
+
