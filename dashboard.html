@@ -535,7 +535,7 @@ function updateDailyRecommendation() {
 
 // Function to update popular mochi
 function updatePopularMochi() {
-  const popularMochi = products.sort(() => 0.5 - Math.random()).slice(0, 6) // Get 6 random mochi
+  const popularMochi = products.sort(() => 0.5 - Math.random()).slice(0, 5) // Get 6 random mochi
   const popularMochiHtml = popularMochi
     .map(
       (mochi) => `

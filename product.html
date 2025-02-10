@@ -122,11 +122,17 @@
             gap: 10px;
             justify-content: space-between;
         }
+        
+        #searchInput{
+            height: 32px;
+            max-height: 32px;
+        }
 
         .search-container {
             flex-grow: 1;
             display: flex;
             gap: 10px;
+            justify-content: center;
         }
 
         .search-container input {
@@ -134,6 +140,13 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+        }
+
+        .searchRecommendation{
+            margin-right: 200px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
         }
 
         .filter-container {
@@ -617,7 +630,6 @@
             <div class="search-container">
                 <div class="search-wrapper">
                     <input type="text" id="searchInput" placeholder="Search for flavors..." oninput="updateRecommendations()">
-                    <div id="searchSuggestions" class="search-suggestions"></div>
                 </div>
                 <button class="button-74" onclick="filterProducts()">Search</button>
             </div>
@@ -631,6 +643,9 @@
                 </div>
                 </div>
         </div>
+        <div class="searchRecommendation">
+        <div id="searchSuggestions" class="search-suggestions"></div>
+    </div>
     </div>
 
     <!-- Filter Options -->
@@ -667,8 +682,7 @@
 
     <main class="container">
         <section class="product-collection">
-            <h1>DISCOVER OUR</h1>
-            <h1>YOCHI! FLAVORS</h1>
+            <h1>DISCOVER OUR YOCHI! FLAVORS</h1>
             <a href="index.html" class="button-74">Back to Home</a>
         </section>
 
