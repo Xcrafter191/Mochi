@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOCHI! Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=DynaPuff:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+  font-family: "Gabarito", sans-serif;
+  background-color: #fffdf0;
+  margin: 0;
+  padding: 0;
+  color: #794874;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.payment-form,
+.order-summary {
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.back-button {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #794874;
+}
+
+h1,
+h2 {
+  font-family: "DynaPuff", sans-serif;
+  margin: 0 0 20px 0;
+}
+
+h1 {
+  flex: 1;
+  text-align: center;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.input-group input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.payment-options {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.option-button {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.option-button.active {
+  border-color: #794874;
+  background-color: #fbeee0;
+}
+
+.product-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.product-details h3 {
+  margin: 0 0 10px 0;
+  font-family: "DynaPuff", sans-serif;
+}
+
+.price {
+  font-weight: bold;
+  color: #794874;
+}
+
+.summary-details {
+  margin-top: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.total {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #eee;
+}
+
+.checkout-btn {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #794874;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  margin-top: 30px;
+  transition: all 0.2s;
+}
+
+.checkout-btn:hover {
+  background-color: #d1c7bd;
+}
+
+.checkout-btn:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="payment-form">
+            <div class="form-header">
+                <button class="back-button">←</button>
+                <h1>Payment</h1>
+            </div>
+            <form id="paymentForm">
+                <section>
+                    <h2>1. Billing Information</h2>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="firstName">FIRST NAME</label>
+                            <input type="text" id="firstName" placeholder="John" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="lastName">LAST NAME</label>
+                            <input type="text" id="lastName" placeholder="Doe" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="email">EMAIL</label>
+                            <input type="email" id="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="phone">PHONE</label>
+                            <input type="tel" id="phone" placeholder="+1234567890" required>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h2>2. Payment Method</h2>
+                    <div class="payment-options">
+                        <button type="button" class="option-button" data-method="mastercard">
+                            <i class="fab fa-cc-mastercard"></i>
+                        </button>
+                        <button type="button" class="option-button" data-method="visa">
+                            <i class="fab fa-cc-visa"></i>
+                        </button>
+                        <button type="button" class="option-button" data-method="apple">
+                            <i class="fab fa-apple-pay"></i>
+                        </button>
+                    </div>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="cardNumber">CARD NUMBER</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="cardholderName">CARDHOLDER NAME</label>
+                            <input type="text" id="cardholderName" placeholder="John Doe" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="expiryDate">EXPIRY DATE</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/100" alt="Mochi" class="product-image">
+                <div class="product-details">
+                    <h3>Strawberry Delight</h3>
+                    <p class="price">$12.99</p>
+                </div>
+            </div>
+            <div class="summary-details">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>$12.99</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>Free</span>
+                </div>
+                <div class="summary-row total">
+                    <span>TOTAL</span>
+                    <span>$12.99</span>
+                </div>
+            </div>
+            <button type="submit" class="checkout-btn">Complete Payment →</button>
+        </div>
+    </div>
+    <script src="product.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const paymentOptions = document.querySelectorAll(".option-button")
+  const checkoutBtn = document.querySelector(".checkout-btn")
+  const form = document.getElementById("paymentForm")
+
+    // Retrieve cart data from localStorage
+    const cartData = JSON.parse(localStorage.getItem("paymentCart"));
+
+    if (!cartData || cartData.items.length === 0) {
+        alert("No cart data found. Please complete the checkout process.");
+        window.location.href = 'checkout.html'; // Redirect to checkout page
+        return;
+    }
+
+    // Populate the order summary
+    const productCard = document.querySelector(".product-card");
+    const subtotal = document.querySelector(".summary-row:nth-child(1) span:last-child");
+    const total = document.querySelector(".summary-row.total span:last-child");
+
+    // Clear existing content
+    productCard.innerHTML = "";
+
+    // Dynamically generate product cards for each item in the cart
+    cartData.items.forEach((item) => {
+        const productHTML = `
+            <img src="${item.image}" alt="${item.name}" class="product-image"">
+            <div class="product-details">
+                <h3>${item.name}</h3>
+                <p class="price">$${(item.price * item.quantity).toFixed(2)}</p>
+            </div>
+        `;
+        productCard.insertAdjacentHTML("beforeend", productHTML);
+    });
+
+    // Update subtotal and total
+    subtotal.textContent = cartData.totalPrice;
+    total.textContent = cartData.totalPrice;
+
+    // Handle form submission
+    checkoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const form = document.getElementById("paymentForm");
+        if (form.checkValidity()) {
+            alert("Payment successful! Thank you for your order.");
+
+            // Clear cart data from localStorage after payment
+            localStorage.removeItem("paymentCart");
+
+            // Optionally redirect to a thank-you page
+            window.location.href = "dashboard.html";
+        } else {
+            form.reportValidity();
+        }
+    });
+
+        // Add event listener to the back button
+        const backButton = document.querySelector(".back-button");
+
+backButton.addEventListener("click", () => {
+    // Redirect to product.html
+    window.location.href = "product.html";
+});
+
+    function getPrice(productName) {
+    const prices = {
+        "Strawberry Delight": 12.99,
+        "Matcha Green Tea": 14.99,
+        "Mango Bliss": 13.99,
+        "Chocolate Dream": 15.99,
+        "Blueberry Burst": 12.99,
+        "Peach Paradise": 13.49,
+        "Raspberry Ripple": 12.99,
+        "Lemon Zest": 11.99,
+        "Coconut Cream": 14.49,
+        "Vanilla Bean": 12.99,
+        "Pistachio Pleasure": 16.99,
+        "Black Sesame Bliss": 13.99,
+        "Passion Fruit Punch": 14.99,
+        "Lychee Love": 13.99,
+        "Durian Delight": 15.99,
+        "Green Apple Crunch": 12.99,
+    };
+    return prices[productName] || 0;
+}
+
+  // Simple card number formatting
+  const cardNumberInput = document.getElementById("cardNumber")
+  cardNumberInput.addEventListener("input", (e) => {
+    const value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "")
+    let formattedValue = ""
+    for (let i = 0; i < value.length; i++) {
+      if (i > 0 && i % 4 === 0) {
+        formattedValue += " "
+      }
+      formattedValue += value[i]
+    }
+    e.target.value = formattedValue.slice(0, 19) // Limit to 16 digits + 3 spaces
+  })
+
+  // Simple expiry date formatting
+  const expiryDateInput = document.getElementById("expiryDate")
+  expiryDateInput.addEventListener("input", (e) => {
+    let value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "")
+    if (value.length > 2) {
+      value = value.slice(0, 2) + "/" + value.slice(2)
+    }
+    e.target.value = value.slice(0, 5) // Limit to MM/YY format
+  })
+})
+    </script>
+</body>
+</html>
+

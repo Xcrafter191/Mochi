@@ -4,87 +4,332 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - YOCHI!</title>
-    <link rel="stylesheet" href="css/contact.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_circle" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=call" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=location_on" />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=DynaPuff:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+      body {
+  font-family: "Gabarito", sans-serif;
+  background-color: #fffdf0;
+  color: #794874;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    width: 130px;
+    height: auto;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-links a {
+    color: #794874;
+    text-decoration: none;
+    font-family: "DynaPuff", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+    color: #ffcccc;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #794874;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-actions button:hover {
+    color: #ffcccc;
+}
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+    }
+    
+    .navbar-content {
+        justify-content: space-between;
+    }
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "DynaPuff", sans-serif;
+  color: #794874;
+}
+
+.contact-section {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contact-item .material-symbols-outlined {
+  font-size: 2.5rem;
+  color: #794874;
+}
+
+.contact-item a {
+  color: #794874;
+  text-decoration: none;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: inherit;
+}
+
+textarea {
+  min-height: 150px;
+}
+
+.submit-btn {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #794874;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #d1c7bd;
+}
+
+.submit-btn:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+.footer-container {
+  background-color: #794874;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+    </style>
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-      <!-- Left Spacer (Empty Div for Alignment) -->
-      <div class="left-header"></div>
-  
-      <!-- Logo -->
-      <a class="navbar-brand mx-auto mx-lg-0" href="index.html">
-        <img src="images/logo.png" alt="YOCHI! Logo" width="120">
-      </a>
-  
-      <!-- Right Side: Profile Icon -->
-      <div class="d-flex align-items-center">
-        <a href="login_signup.html" class="text-decoration-none me-3">
-          <span class="material-symbols-outlined" style="font-size: 2rem;">account_circle</span>
+  <nav class="navbar">
+    <div class="navbar-content">
+        <a href="/" class="navbar-brand">
+            <img src="images/logo.png" alt="YOCHI! Logo">
         </a>
-      </div>
+        <ul class="navbar-links">
+            <li><a href="product.html">Products</a></li>
+            <li><a href="contact.html">About Us</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+        <div class="navbar-actions">
+            <button id="notificationsBtn" title="Notifications">🔔</button>
+            <a href="layout-checkout.html"><button title="Cart">🛒</button></a>
+            <button id="favoriteBtn" title="Favorites">🤍</button>
+            <a href="profile.html"><button title="Profile">👤</button></a>
+        </div>
     </div>
-  </nav>
+</nav>
 
-    <!-- Contact Page -->
+    <!-- Contact Content -->
     <div class="contact-container">
-        <!-- Header Section -->
-        <header class="contact-header">
-            <h1>Contact Us</h1>
-            <p>We'd love to hear from you! Reach out to us using the information below.</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="contact-content">
-            <!-- Contact Information -->
-            <section class="contact-info">
-                <div class="info-item">
-                    <span class="material-symbols-outlined">
-                        call
-                        </span>
+        <h1>Contact Us</h1>
+        <p class="lead">We'd love to hear from you! Reach out to us using the information below.</p>
+        
+        <!-- Contact Information -->
+        <section class="contact-section">
+            <h2>Get in Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="material-symbols-outlined">call</span>
                     <div>
                         <h3>Phone</h3>
-                        <p><a href="tel:+1234567890">+123 456 7890</a></p>
+                        <p><a href="tel:+1234567890">+62 812-2392-8628</a></p>
                     </div>
                 </div>
-                <div class="info-item">
-                    <span class="material-symbols-outlined">
-                        location_on
-                        </span>
+                <div class="contact-item">
+                    <span class="material-symbols-outlined">location_on</span>
                     <div>
                         <h3>Address</h3>
-                        <p>123 Mochi Street, Jakarta, Indonesia</p>
+                        <p>TKI 3 Blok F2, Kab. Bandung, Indonesia</p>
                     </div>
                 </div>
-                <div class="info-item">
+                <div class="contact-item">
                     <span class="material-symbols-outlined">email</span>
                     <div>
                         <h3>Email</h3>
                         <p><a href="mailto:info@yochi.com">info@yochi.com</a></p>
                     </div>
                 </div>
-                <div class="info-item">
-                    <span class="material-symbols-outlined">instagram</span>
+                <div class="contact-item">
+                    <span class="material-symbols-outlined">public</span>
                     <div>
-                        <h3>Instagram</h3>
+                        <h3>Social Media</h3>
                         <p><a href="https://instagram.com/yochi" target="_blank">@yochi</a></p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-  <!-- Footer Section -->
-  <footer class="text-white text-center py-4 footer-container">
-    <div class="container">
-      <p>&copy; 2025 YOCHI!. All rights reserved. Designed by Φ, Gerzz, Sredoznath.</p>
-      <a href="#!" class="text-white mx-2">Privacy Policy</a>
-      <a href="#!" class="text-white mx-2">Terms of Service</a>
+        <!-- Contact Form -->
+        <section class="contact-section">
+            <h2>Send Us a Message</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </section>
     </div>
-  </footer>
-    </div>
+
+    <!-- Footer -->
+    <footer class="text-white text-center py-4 footer-container">
+        <div class="container">
+            <p>&copy; 2025 YOCHI!. All rights reserved. Designed by Φ, Gerzz, Sredoznath, Pinoo, DMS</p>
+            <a href="#!" class="text-white mx-2">Privacy Policy</a>
+            <a href="#!" class="text-white mx-2">Terms of Service</a>
+        </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+  const contactForm = document.getElementById("contactForm")
+
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    // Get form values
+    const name = document.getElementById("name").value
+    const email = document.getElementById("email").value
+    const subject = document.getElementById("subject").value
+    const message = document.getElementById("message").value
+
+    // Here you would typically send this data to a server
+    // For now, we'll just log it to the console and show an alert
+    console.log("Form submitted:", { name, email, subject, message })
+
+    alert("Thank you for your message! We will get back to you soon.")
+
+    // Reset the form
+    contactForm.reset()
+  })
+})
+    </script>
 </body>
 </html>

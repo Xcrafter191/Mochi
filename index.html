@@ -10,7 +10,180 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Chewy&family=DynaPuff:wdth,wght@87.5,400..700&family=Gabarito:wght@400..900&family=Jacquard+12&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Margarine&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="index.css">
+  <style>
+    /* General Styles */
+body {
+  color: #794874;
+  font-family: "Gabarito", serif;
+  font-style: normal;
+  font-weight: bold;
+  background: 
+    url('images/index_background1.png') no-repeat top center, /* Top image */
+    url('images/index_background2.png') no-repeat bottom center; /* Bottom image */
+
+  background-color: #fffdf0;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+nav{
+  margin-top: 2vh;
+}
+
+.header-container{
+  padding: 1.5vh;
+  margin-left: 7vw;
+  margin-top: 10vh;
+
+  animation: fadeOUT 1s linear calc(var(--scroll) * -1s) 1 both paused;
+}
+
+@keyframes fadeOUT {
+  to {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+}
+
+.hero-section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.hero-section h1{
+  font-family: "DynaPuff", serif;
+  font-weight: 900;
+  font-size: 7rem;
+}
+
+h2{
+  font-family: "DynaPuff", serif;
+  font-weight: 900;
+}
+
+.some-text-header{
+  color: #f0deee;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+h5{
+  color: #94598eaf;
+}
+
+.button-74 {
+  font-family: "DynaPuff", serif;
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  color: #794874;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-74:hover {
+  color: #5e385a;
+  background-color: #d1c7bd;
+}
+
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+/* Flavors Section */
+.flavor-card img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.flavor-card:hover img {
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 3rem;
+  }
+}
+
+/* Navbar Styles */
+.navbar-brand img {
+  width: 130px;
+  padding: 5px;
+}
+
+.why-container{
+  animation: fadeIN 1s linear infinite;
+  animation-play-state: paused;
+  animation-delay: calc(var(--scroll) * -1.5s);
+
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  opacity: 0;
+}
+
+@keyframes fadeIN {
+  from{
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* Highlight Section Styling */
+#highlights img {
+  width: 200px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  object-fit: cover; /* Ensures proper scaling */
+  border-radius: 10%;
+  margin: 0 auto; /* Centers the image */
+  display: block; /* Removes extra space below the image */
+  transition: 0.2s ease-in-out;
+  border:3px solid #794874;
+}
+
+#highlights img:hover{
+  width: 250px;
+  height: 250px;
+}
+
+#highlights .col-md-3 {
+  padding: 1rem; /* Adds padding around each column */
+}
+
+#highlights h5 {
+  margin-top: 1rem; /* Adds space between the image and the heading */
+}
+
+#highlights p {
+  font-size: 0.9rem; /* Slightly smaller text for descriptions */
+}
+
+.footer-container{
+  background-color: #794874;
+}
+
+  </style>
 </head>
 <body>
 
@@ -74,15 +247,15 @@
       <h2 class="text-center mb-5">Our Delicious Flavors!</h2>
       <div class="row fw-bold">
         <div class="col-md-4 text-center flavor-card">
-          <img src="flavors/strawberry.jpg" alt="Strawberry Bliss" class="img-fluid rounded-circle mb-3">
+          <img src="images/Strawberry.jpg" alt="Strawberry Bliss" class="img-fluid rounded-circle mb-3">
           <h5>Strawberry Bliss</h5>
         </div>
         <div class="col-md-4 text-center flavor-card">
-          <img src="flavors/mango.jpg" alt="Mango Tango" class="img-fluid rounded-circle mb-3">
+          <img src="images/flavor_mango.jpg" alt="Mango Tango" class="img-fluid rounded-circle mb-3">
           <h5>Mango Tango</h5>
         </div>
         <div class="col-md-4 text-center flavor-card">
-          <img src="flavors/blueberry.jpg" alt="Blueberry Burst" class="img-fluid rounded-circle mb-3">
+          <img src="images/flavor_blueberry.jpg" alt="Blueberry Burst" class="img-fluid rounded-circle mb-3">
           <h5>Blueberry Burst</h5>
         </div>
       </div>
@@ -95,7 +268,7 @@
       <h2 class="text-center mb-5">About YOCHI!</h2>
       <div class="row align-items-center">
         <div class="col-md-6">
-          <img src="about-us.jpg" alt="About YOCHI!" class="img-fluid rounded">
+          <img src="images/logo.png" alt="About YOCHI!" class="img-fluid rounded">
         </div>
         <div class="col-md-6">
           <p class="lead">At YOCHI!, we believe in combining the best of two worlds: creamy yoghurt and soft mochi. Our mission is to bring you a snack that's not only delicious but also healthy and fun to eat.</p>
@@ -115,7 +288,18 @@
 
   <!-- Bootstrap JS and Popper.js -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="product.html"></script>
   <!-- Custom JS -->
-  <script src="index.js"></script>
+  <script>
+    // Add any interactive functionality here, such as scroll animations or pop-ups.
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('YOCHI! Landing Page Loaded');
+  });
+  
+window.addEventListener('scroll', () => {
+  document.body.style.setProperty('--scroll', window.pageYOffset / (document.body.offsetHeight - window.innerHeight));
+}, false);
+
+  </script>
 </body>
 </html>

@@ -122,11 +122,17 @@
             gap: 10px;
             justify-content: space-between;
         }
+        
+        #searchInput{
+            height: 32px;
+            max-height: 32px;
+        }
 
         .search-container {
             flex-grow: 1;
             display: flex;
             gap: 10px;
+            justify-content: center;
         }
 
         .search-container input {
@@ -134,6 +140,13 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+        }
+
+        .searchRecommendation{
+            margin-right: 200px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
         }
 
         .filter-container {
@@ -617,7 +630,6 @@
             <div class="search-container">
                 <div class="search-wrapper">
                     <input type="text" id="searchInput" placeholder="Search for flavors..." oninput="updateRecommendations()">
-                    <div id="searchSuggestions" class="search-suggestions"></div>
                 </div>
                 <button class="button-74" onclick="filterProducts()">Search</button>
             </div>
@@ -631,6 +643,9 @@
                 </div>
                 </div>
         </div>
+        <div class="searchRecommendation">
+        <div id="searchSuggestions" class="search-suggestions"></div>
+    </div>
     </div>
 
     <!-- Filter Options -->
@@ -667,8 +682,7 @@
 
     <main class="container">
         <section class="product-collection">
-            <h1>DISCOVER OUR</h1>
-            <h1>YOCHI! FLAVORS</h1>
+            <h1>DISCOVER OUR YOCHI! FLAVORS</h1>
             <a href="index.html" class="button-74">Back to Home</a>
         </section>
 
@@ -718,7 +732,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 YOCHI!. All rights reserved. Designed by Φ.</p>
+            <p>&copy; 2025 YOCHI!. All rights reserved. Designed by Φ, Gerzz, Sredoznath, Pinoo, DMS.</p>
             <div>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>
@@ -726,193 +740,8 @@
         </div>
     </footer>
 
+    <script src="product.js"></script>
     <script>
-// ----------------------------
-// Product Data and Constants
-// ----------------------------
-
-const products = [
-{
-    name: "Strawberry Delight",
-    image: "images/Strawberry.jpg",
-    hoverImage: "images/strawberry-hover.png",
-    rating: 4.3,
-    price: 12.99,
-    description: "Juicy strawberry filling wrapped in creamy yogurt mochi",
-    details: "Contains real strawberry puree. 150 calories per piece.",
-    flavor: "strawberry",
-    reviews: [
-      {
-        user: "Emily R.",
-        rating: 5,
-        comment: "The strawberry flavor is so authentic! Love how the sweetness isn't overwhelming.",
-      },
-      { user: "David K.", rating: 4, comment: "Perfect summer treat. The yogurt filling is refreshing." },
-    ],
-  },
-  {
-    name: "Matcha Green Tea",
-    image: "images/flavor_matcha.jpg",
-    hoverImage: "images/matcha-hover.png",
-    rating: 4.8,
-    price: 14.99,
-    description: "Premium matcha flavor with smooth yogurt filling",
-    details: "Contains green tea extract. 140 calories per piece.",
-    flavor: "matcha",
-    reviews: [
-      { user: "Akiko T.", rating: 5, comment: "Authentic matcha taste! Reminds me of Japanese desserts." },
-      { user: "Michael L.", rating: 5, comment: "Perfect balance of matcha and yogurt. Not too sweet!" },
-    ],
-  },
-  {
-    name: "Mango Bliss",
-    image: "images/flavor_mango.jpg",
-    hoverImage: "images/mango-hover.png",
-    rating: 3.7,
-    price: 13.99,
-    description: "Tropical mango filling in soft yogurt mochi",
-    details: "Made with ripe mango pulp. 160 calories per piece.",
-    flavor: "mango",
-    reviews: [
-      { user: "Sophie W.", rating: 5, comment: "Tastes like fresh mangoes! The tropical flavor is perfect." },
-      { user: "James H.", rating: 4, comment: "Great summer flavor, very refreshing." },
-    ],
-  },
-  {
-    name: "Chocolate Dream",
-    image: "images/flavor_chocolate.jpg",
-    hoverImage: "images/chocolate-hover.png",
-    rating: 4.6,
-    price: 15.99,
-    description: "Rich chocolate center with creamy yogurt coating",
-    details: "Contains dark chocolate. 170 calories per piece.",
-    flavor: "chocolate",
-    reviews: [
-      { user: "Maria C.", rating: 5, comment: "The chocolate filling is divine! Not too sweet, just perfect." },
-      { user: "Tom B.", rating: 4, comment: "Great combination of chocolate and yogurt. Very unique!" },
-    ],
-  },
-    { 
-        name: "Blueberry Burst", 
-        image: "images/flavor_blueberry.jpg", 
-        hoverImage: "images/blueberry-hover.png",
-        rating: 4.4,
-        price: 12.99,
-        description: "Bursting with blueberry goodness in every bite",
-        details: "Sweet and tangy blueberry filling. 155 calories per piece.",
-        flavor: "blueberry"
-    },
-    { 
-        name: "Peach Paradise", 
-        image: "images/peach.png", 
-        hoverImage: "images/peach-hover.png",
-        rating: 4.1,
-        price: 13.49,
-        description: "Juicy peach flavor encased in soft yogurt mochi",
-        details: "Made with fresh peach juice. 150 calories per piece.",
-        flavor: "peach"
-    },
-    { 
-        name: "Raspberry Ripple", 
-        image: "images/raspberry.png", 
-        hoverImage: "images/raspberry-hover.png",
-        rating: 4.5,
-        price: 12.99,
-        description: "Tangy raspberry filling with a creamy yogurt twist",
-        details: "Naturally sweetened with raspberry puree. 145 calories per piece.",
-        flavor: "raspberry"
-    },
-    { 
-        name: "Lemon Zest", 
-        image: "images/lemon.png", 
-        hoverImage: "images/lemon-hover.png",
-        rating: 4.7,
-        price: 11.99,
-        description: "Zesty lemon filling in a chewy yogurt mochi shell",
-        details: "Citrusy and refreshing. 130 calories per piece.",
-        flavor: "lemon"
-    },
-    { 
-        name: "Coconut Cream", 
-        image: "images/coconut.png", 
-        hoverImage: "images/coconut-hover.png",
-        rating: 3.8,
-        price: 14.49,
-        description: "Creamy coconut filling wrapped in yogurt mochi",
-        details: "Made with real coconut milk. 165 calories per piece.",
-        flavor: "coconut"
-    },
-    { 
-        name: "Vanilla Bean", 
-        image: "images/flavor_vanilla.jpg", 
-        hoverImage: "images/vanilla-hover.png",
-        rating: 4.5,
-        price: 12.99,
-        description: "Classic vanilla bean flavor with a yogurt twist",
-        details: "Infused with real vanilla beans. 140 calories per piece.",
-        flavor: "vanilla"
-    },
-    { 
-        name: "Pistachio Pleasure", 
-        image: "images/pistachio.png", 
-        hoverImage: "images/pistachio-hover.png",
-        rating: 4,
-        price: 16.99,
-        description: "Nutty pistachio filling in a creamy yogurt mochi",
-        details: "Made with roasted pistachios. 180 calories per piece.",
-        flavor: "pistachio"
-    },
-    { 
-        name: "Black Sesame Bliss", 
-        image: "images/black-sesame.png", 
-        hoverImage: "images/black-sesame-hover.png",
-        rating: 4.2,
-        price: 13.99,
-        description: "Earthy black sesame flavor with a yogurt coating",
-        details: "Rich in antioxidants. 150 calories per piece.",
-        flavor: "black sesame"
-    },
-    { 
-        name: "Passion Fruit Punch", 
-        image: "images/passion-fruit.png", 
-        hoverImage: "images/passion-fruit-hover.png",
-        rating: 4.5,
-        price: 14.99,
-        description: "Exotic passion fruit filling in a chewy yogurt mochi",
-        details: "Tangy and sweet. 155 calories per piece.",
-        flavor: "passion fruit"
-    },
-    { 
-        name: "Lychee Love", 
-        image: "images/lychee.png", 
-        hoverImage: "images/lychee-hover.png",
-        rating: 4.6,
-        price: 13.99,
-        description: "Delicate lychee flavor wrapped in creamy yogurt mochi",
-        details: "Made with natural lychee extract. 145 calories per piece.",
-        flavor: "lychee"
-    },
-    { 
-        name: "Durian Delight", 
-        image: "images/durian.png", 
-        hoverImage: "images/durian-hover.png",
-        rating: 3.1,
-        price: 21,
-        description: "Bold durian flavor for adventurous taste buds",
-        details: "Made with premium durian fruit. 190 calories per piece.",
-        flavor: "durian"
-    },
-    { 
-        name: "Green Apple Crunch", 
-        image: "images/green-apple.png", 
-        hoverImage: "images/green-apple-hover.png",
-        rating: 4.5,
-        price: 12.99,
-        description: "Crisp green apple filling in a soft yogurt mochi",
-        details: "Tart and refreshing. 135 calories per piece.",
-        flavor: "green apple"
-    }
-];
 
 // ----------------------------
 // DOM Elements
@@ -968,6 +797,26 @@ function filterProducts() {
     });
 
     renderProducts(filtered);
+}
+
+function addToCart(productName) {
+    // Retrieve existing cart data from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Check if the product is already in the cart
+    const existingProduct = cart.find(item => item.name === productName);
+    if (existingProduct) {
+        existingProduct.quantity += 1; // Increment quantity
+    } else {
+        // Add new product to the cart
+        cart.push({ name: productName, quantity: 1 });
+    }
+
+    // Save updated cart back to localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    console.log(`${productName} added to cart.`);
+    alert(`${productName} added to cart!`);
 }
 
 // ----------------------------
@@ -1269,6 +1118,7 @@ function initialize() {
     initializeFilterDropdown();
     initializeEventListeners();
     renderProducts(products);
+    loadFavorites();
 }
 
 // Start the application
