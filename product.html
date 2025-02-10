@@ -9,9 +9,9 @@
         /* General Styles */
         body {
             font-family: "Gabarito", serif;
-            background-image: url('images/product_background1.png'), url('images/product_background2.png');
-            background-position: top center, bottom center;
-            background-repeat: no-repeat, no-repeat;
+            background: 
+    url('images/product_background1.png') no-repeat top center, /* Top image */
+    url('images/product_background2.png') no-repeat bottom center; /* Bottom image */
             background-color: #fffdf0;
             margin: 0;
             padding: 0;
@@ -26,11 +26,25 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
-        }
+            animation: slideIn 1s ease-in-out forwards;
+}
+
+
+@keyframes slideIn{
+  from{
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+        
 
 /* Navbar Styles */
 .navbar {
-    background-color: white;
+    background-color: 
+    #fffdf0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 0;
     position: sticky;
@@ -45,11 +59,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-}
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
 }
 
 .navbar-brand img {
@@ -112,7 +121,6 @@
 
         /* Search and Filter Bar Styles */
         .search-filter-bar {
-            background-color: #f0f0f0;
             padding: 20px 0;
         }
 
@@ -139,7 +147,7 @@
             flex-grow: 1;
             padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 15px;
         }
 
         .searchRecommendation{
@@ -187,6 +195,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1000;
             width: 200px;
+            margin: 100px;
         }
 
         .filter-category {
@@ -253,24 +262,7 @@
             width: 100%;
             height: 250px;
             object-fit: cover;
-            transition: opacity 0.3s ease;
         }
-
-        .product .hover-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-        }
-
-        .product:hover .default-image {
-            opacity: 0;
-        }
-
-        .product:hover .hover-image {
-            opacity: 1;
-        }
-
         .product-title {
             position: absolute;
             bottom: 10px;
@@ -284,42 +276,13 @@
             width: 100%;
         }
 
-        /* Highlights Section Styles */
-        .highlights {
-            background-color: white;
-            padding: 50px 0;
-        }
-
-        .highlights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-        }
-
-        .highlight-item {
-            text-align: center;
-        }
-
-        .highlight-item img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid #794874;
-            transition: all 0.3s ease;
-        }
-
-        .highlight-item:hover img {
-            width: 220px;
-            height: 220px;
-        }
-
         /* Footer Styles */
         .footer {
             background-color: #794874;
             color: white;
             text-align: center;
             padding: 20px 0;
+            margin-top: 2%;
         }
 
         .footer a {
@@ -366,20 +329,6 @@
         @media (max-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-
-            .highlights-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-
-            .highlight-item img {
-                width: 150px;
-                height: 150px;
-            }
-
-            .highlight-item:hover img {
-                width: 170px;
-                height: 170px;
             }
         }
 
@@ -600,7 +549,7 @@
 <body>
     <nav class="navbar">
         <div class="navbar-content">
-            <a href="/" class="navbar-brand">
+            <a href="index.html" class="navbar-brand">
                 <img src="images/logo.png" alt="YOCHI! Logo">
             </a>
             <ul class="navbar-links">
@@ -624,30 +573,6 @@
         <!-- Dynamically populated list of favorite items -->
     </ul>
 </div>
-
-    <div class="search-filter-bar">
-        <div class="container search-filter-content">
-            <div class="search-container">
-                <div class="search-wrapper">
-                    <input type="text" id="searchInput" placeholder="Search for flavors..." oninput="updateRecommendations()">
-                </div>
-                <button class="button-74" onclick="filterProducts()">Search</button>
-            </div>
-            <div class="filter-container">
-                <button id="filterButton" class="filter-button">Filter</button>
-                <div id="filterDropdown" class="filter-dropdown">
-                    <div class="filter-category" data-category="flavours">Flavours</div>
-                    <div class="filter-category" data-category="price">Price</div>
-                    <div class="filter-category" data-category="rating">Rating</div>
-                    <div class="filter-category" data-category="sort">Sort By</div>
-                </div>
-                </div>
-        </div>
-        <div class="searchRecommendation">
-        <div id="searchSuggestions" class="search-suggestions"></div>
-    </div>
-    </div>
-
     <!-- Filter Options -->
     <div id="flavoursOptions" class="filter-options">
         <!-- Flavor checkboxes will be dynamically inserted here -->
@@ -680,11 +605,34 @@
         <label><input type="checkbox" name="sort" value="favorited"> Most Favorited</label>
     </div>
 
-    <main class="container">
+    <main class="container container-content">
         <section class="product-collection">
-            <h1>DISCOVER OUR YOCHI! FLAVORS</h1>
+            <h1  style="font-size: 50px;">DISCOVER OUR YOCHI! FLAVORS</h1>
             <a href="index.html" class="button-74">Back to Home</a>
         </section>
+
+        <div class="search-filter-bar">
+            <div class="container search-filter-content">
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="searchInput" placeholder="Search for flavors..." oninput="updateRecommendations()">
+                    </div>
+                    <button class="button-74" onclick="filterProducts()">Search</button>
+                </div>
+                <div class="filter-container">
+                    <button id="filterButton" class="filter-button">Filter</button>
+                    <div id="filterDropdown" class="filter-dropdown">
+                        <div class="filter-category" data-category="flavours">Flavours</div>
+                        <div class="filter-category" data-category="price">Price</div>
+                        <div class="filter-category" data-category="rating">Rating</div>
+                        <div class="filter-category" data-category="sort">Sort By</div>
+                    </div>
+                    </div>
+            </div>
+            <div class="searchRecommendation">
+            <div id="searchSuggestions" class="search-suggestions"></div>
+        </div>
+        </div>
 
         <div id="productGrid" class="product-grid">
             <!-- Product items will be dynamically inserted here -->
@@ -701,34 +649,6 @@
                 </div>
             </div>
     </main>
-
-    <section class="highlights">
-        <div class="container">
-            <h2>Why Choose YOCHI!?</h2>
-            <div class="highlights-grid">
-                <div class="highlight-item">
-                    <img src="images/creamy.png" alt="Creamy Yoghurt">
-                    <h5>Creamy Yoghurt</h5>
-                    <p>Rich and smooth texture.</p>
-                </div>
-                <div class="highlight-item">
-                    <img src="images/soft.png" alt="Soft Mochi">
-                    <h5>Soft Mochi</h5>
-                    <p>Chewy and delightful.</p>
-                </div>
-                <div class="highlight-item">
-                    <img src="images/natural.png" alt="All-Natural">
-                    <h5>All-Natural Ingredients</h5>
-                    <p>No artificial additives.</p>
-                </div>
-                <div class="highlight-item">
-                    <img src="images/portable.png" alt="Portable Snack">
-                    <h5>Perfectly Portable</h5>
-                    <p>Enjoy anywhere, anytime.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <footer class="footer">
         <div class="container">
@@ -771,7 +691,6 @@ function renderProducts(productsToRender) {
         productDiv.classList.add("product");
         productDiv.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="default-image">
-            <img src="${product.hoverImage}" alt="${product.name}" class="hover-image">
             <h3 class="product-title">${product.name}</h3>
         `;
         productDiv.addEventListener("click", () => showProductModal(product));
