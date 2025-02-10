@@ -76,7 +76,7 @@ const products = [
       { 
           name: "Peach Paradise", 
           image: "images/flavor_peach.jpg", 
-          hoverImage: "images/peach-hover.png",
+          hoverImage: "images/flavor_peach_hover.jpg",
           rating: 4.1,
           price: 13.49,
           description: "Juicy peach flavor encased in soft yogurt mochi",
@@ -102,7 +102,7 @@ const products = [
       { 
           name: "Lemon Zest", 
           image: "images/flavor_lemon.jpg", 
-          hoverImage: "images/lemon-hover.png",
+          hoverImage: "images/flavor_lemon_hover.jpg",
           rating: 4.7,
           price: 11.99,
           description: "Zesty lemon filling in a chewy yogurt mochi shell",
@@ -167,7 +167,7 @@ const products = [
       { 
           name: "Passion Fruit Punch", 
           image: "images/flavor_fruit.jpg", 
-          hoverImage: "images/passion-fruit-hover.png",
+          hoverImage: "images/flavor_fruit_hover.jpg",
           rating: 4.5,
           price: 14.99,
           description: "Exotic passion fruit filling in a chewy yogurt mochi",
